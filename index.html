@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eden EdTech Placement and Career Hub</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts for Certificate & Web App -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background-color: #030712;
+      color: #f3f4f6;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+    .logo-gradient-box {
+      background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    }
+
+    /* Professional Certificate Styles */
+    .cert-font-cinzel { font-family: 'Cinzel', serif; }
+    .cert-font-playfair { font-family: 'Playfair Display', serif; }
+    .cert-font-montserrat { font-family: 'Montserrat', sans-serif; }
+    .cert-font-inter { font-family: 'Inter', sans-serif; }
+
+    .company-marquee {
+      overflow: hidden;
+      position: relative;
+    }
+    .company-track {
+      display: flex;
+      width: max-content;
+      animation: companyScroll 28s linear infinite;
+    }
+    .company-track:hover { animation-play-state: paused; }
+    @keyframes companyScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .testimonial-card { transition: transform .25s ease, border-color .25s ease; }
+    .testimonial-card:hover { transform: translateY(-5px); border-color: rgba(16,185,129,.45); }
+
+    @media print {
+      body * { visibility: hidden; }
+      .certificate-template.print-selected, .certificate-template.print-selected * { visibility: visible; }
+      .certificate-template.print-selected { 
+        position: fixed; 
+        left: 0; 
+        top: 0; 
+        width: 100vw; 
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen antialiased bg-[#030712] text-slate-100">
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header class="bg-[#030712]/95 backdrop-blur-md text-white sticky top-0 z-40 border-b border-[#111827]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- LOGO & BRANDING -->
+      <div class="flex items-center space-x-3 cursor-pointer shrink-0" onclick="switchTab('home')">
+        <div class="relative w-11 h-11 rounded-xl p-[1.5px] logo-gradient-box shadow-lg shadow-emerald-950/50 flex items-center justify-center">
+          <div class="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center relative overflow-hidden">
+            <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-cyan-400/40 blur-sm rounded-full"></div>
+            <div class="absolute -top-2 -left-2 w-6 h-6 bg-emerald-500/40 blur-sm rounded-full"></div>
+            <i class="fa-solid fa-graduation-cap text-xl bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent relative z-10"></i>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-lg font-extrabold tracking-tight leading-none">
+            <span class="text-emerald-400">Eden</span> <span class="text-cyan-400">EdTech</span>
+          </h1>
+          <p class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase mt-1">PLACEMENT & CAREER HUB</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center space-x-2 text-sm font-medium text-slate-300">
+        <button onclick="switchTab('home')" class="px-4 py-2 rounded-lg transition hover:text-white">About Us</button>
+        <button onclick="switchTab('programmes')" class="px-4 py-2 rounded-lg transition hover:text-white">Student Registration</button>
+        <button onclick="switchTab('partnership')" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white border border-[#1f2937] bg-[#0b0f19] ml-2">College Partner & MOU</button>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="hidden sm:block shrink-0">
+        <button onclick="switchTab('apply')" class="bg-[#10b981] hover:bg-[#059669] text-white font-semibold text-sm px-6 py-2.5 rounded-lg shadow-lg shadow-emerald-950/50 transition">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white p-2">
+        <i class="fa-solid fa-bars text-2xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-[#0b0f19] border-b border-[#1f2937] px-4 pt-3 pb-5 space-y-2 text-base">
+      <button onclick="switchTab('home')" class="block w-full text-left px-3 py-2 rounded-md text-slate-200">About Us</button>
+      <button onclick="switchTab('programmes')" class="block w-full text-left px-3 py-2 rounded-md text-slate-200">Student Registration & Programmes</button>
+      <button onclick="switchTab('partnership')" class="block w-full text-left px-3 py-2 rounded-md text-slate-200">Institutional MOU & Partner</button>
+      <button onclick="switchTab('apply')" class="block w-full text-left px-3 py-2 rounded-md text-emerald-400 font-semibold">Apply Now</button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-grow">
+
+    <!-- 1. HOME / ABOUT US TAB -->
+    <section id="tab-home" class="tab-content active">
+      <div class="bg-[#030712] text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div class="max-w-5xl mx-auto relative z-10">
+          
+          <div class="inline-flex items-center gap-2 bg-[#0b101d] border border-emerald-500/40 text-emerald-400 text-sm px-4 py-2 rounded-full font-medium mb-8 shadow-sm">
+            <i class="fa-solid fa-sparkles text-xs"></i>
+            <span>Eden EdTech Placement and Career Hub</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight text-white">
+            Bridging Academics &<br>
+            Industry with <span class="text-[#10b981]">Zero Skill</span><br>
+            <span class="text-[#38bdf8]">Gaps</span>
+          </h1>
+
+          <p class="text-slate-300 text-lg sm:text-xl mb-10 max-w-3xl mx-auto leading-relaxed font-normal">
+            Empowering students and institutions with hands-on technical mastery, corporate readiness training, and direct placement opportunities with companies that hire our trained students.
+          </p>
+
+          <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+            <button onclick="switchTab('programmes')" class="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] text-white font-bold px-8 py-4 rounded-xl text-base shadow-lg shadow-emerald-950/50 transition flex items-center justify-center gap-2">
+              <span>Explore Programmes & Register</span>
+              <i class="fa-solid fa-arrow-right text-sm"></i>
+            </button>
+            <button onclick="switchTab('partnership')" class="w-full sm:w-auto bg-[#0b101d] hover:bg-[#151c2e] text-slate-200 border border-[#1f2937] font-semibold px-8 py-4 rounded-xl text-base transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-building-columns text-slate-400 text-sm"></i>
+              <span>Institutional Partnership</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#10b981] mb-1">20,000+</div>
+              <div class="text-sm text-slate-400 font-medium">Students Trained</div>
+            </div>
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#38bdf8] mb-1">150+</div>
+              <div class="text-sm text-slate-400 font-medium">Colleges Partnered</div>
+            </div>
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#10b981] mb-1">92%</div>
+              <div class="text-sm text-slate-400 font-medium">Placement Ratio</div>
+            </div>
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#f59e0b] mb-1">200+</div>
+              <div class="text-sm text-slate-400 font-medium">Hiring Companies</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ABOUT EDEN EDTECH: CAREER SUCCESS SECTION -->
+      <section class="bg-[#030712] border-b border-[#111827] py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="inline-flex items-center bg-emerald-500/10 border border-emerald-500/20 text-slate-200 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-lg mb-8">About Eden EdTech</div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-6">Transforming College Education<br>into Real-World Career Success</h2>
+              <p class="text-slate-400 text-base leading-relaxed mb-10">At <strong class="text-white">Eden EdTech Placement and Career Hub</strong>, we bridge the divide between theoretical college curricula and modern corporate expectations. We partner with universities and degree colleges to deliver industry-aligned technical skill tracks, soft skills bootcamps, and placement-focused career preparation.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-[#0f172a] border border-[#253149] rounded-xl p-5"><i class="fa-solid fa-bullseye text-emerald-400 text-xl mb-4"></i><h3 class="text-white font-bold text-lg mb-2">Outcome Focused</h3><p class="text-slate-400 text-xs leading-relaxed">Every curriculum is mapped to active job roles and industry recruitment benchmarks.</p></div>
+                <div class="bg-[#0f172a] border border-[#253149] rounded-xl p-5"><i class="fa-solid fa-award text-blue-400 text-xl mb-4"></i><h3 class="text-white font-bold text-lg mb-2">NAAC / NBA Accreditation</h3><p class="text-slate-400 text-xs leading-relaxed">Helps colleges satisfy key institutional grading criteria for skill enhancement.</p></div>
+              </div>
+            </div>
+            <div class="bg-[#0f172a] border border-[#253149] rounded-2xl p-8 space-y-7">
+              <div class="flex gap-5 items-start"><div class="w-12 h-12 rounded-xl bg-emerald-500/15 flex items-center justify-center shrink-0"><i class="fa-solid fa-code text-emerald-400 text-xl"></i></div><div><h3 class="text-white font-bold text-lg">Comprehensive IT Training</h3><p class="text-slate-400 text-sm">Full-stack, Cloud, AI, and Cybersecurity</p></div></div>
+              <div class="flex gap-5 items-start"><div class="w-12 h-12 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0"><i class="fa-solid fa-suitcase text-blue-400 text-xl"></i></div><div><h3 class="text-white font-bold text-lg">Non-IT Professional Modules</h3><p class="text-slate-400 text-sm">Digital Marketing, Data Analytics &amp; Sales</p></div></div>
+              <div class="flex gap-5 items-start"><div class="w-12 h-12 rounded-xl bg-purple-500/15 flex items-center justify-center shrink-0"><i class="fa-solid fa-users text-purple-400 text-xl"></i></div><div><h3 class="text-white font-bold text-lg">Campus to Corporate Finishing</h3><p class="text-slate-400 text-sm">Aptitude, Mock Interviews &amp; Resume Building</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPANIES WHERE OUR STUDENTS HAVE BEEN PLACED: ABOUT US ONLY -->
+      <section class="bg-[#080d1d] border-b border-[#111827] py-10 company-marquee">
+        <div class="text-center text-[11px] sm:text-xs tracking-[0.18em] uppercase text-slate-400 font-semibold mb-5">
+          Companies Where Our Students Have Been Placed
+        </div>
+        <div class="company-track gap-10 sm:gap-14 px-4" id="company-track">
+          <div class="flex items-center gap-10 sm:gap-14" id="company-set-1"></div>
+          <div class="flex items-center gap-10 sm:gap-14 ml-10 sm:ml-14" id="company-set-2"></div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS: ABOUT US ONLY -->
+      <section class="bg-[#060b18] border-y border-[#111827] py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-12">
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
+              <i class="fa-solid fa-comments"></i> Student Testimonials
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white mt-4">What Our Students Say</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto mt-3 text-sm sm:text-base">Hear directly from students who completed Eden EdTech training and placement programmes.</p>
+          </div>
+          <div id="public-testimonials" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- APPLY NOW TAB -->
+    <section id="tab-apply" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-14 px-4 text-center border-b border-[#1f2937]">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-3">Apply Now</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">Choose the appropriate application below. </p>
+      </div>
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-[#0b0f19] border border-emerald-500/30 rounded-2xl p-8 text-center shadow-xl">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5"><i class="fa-solid fa-user-graduate text-2xl text-emerald-400"></i></div>
+            <h3 class="text-2xl font-bold text-white mb-3">Student Registration</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-7">For students who want to register for Eden EdTech training, career development and placement programmes.</p>
+            <button type="button" onclick="alert('Student Google Form will be connected here soon.')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl transition">Student Registration</button>
+          </div>
+          <div class="bg-[#0b0f19] border border-cyan-500/30 rounded-2xl p-8 text-center shadow-xl">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5"><i class="fa-solid fa-building-columns text-2xl text-cyan-400"></i></div>
+            <h3 class="text-2xl font-bold text-white mb-3">Institutional MOU</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-7">For colleges and institutions interested in MOU partnerships, student training, campus programmes and placement collaboration.</p>
+            <button type="button" onclick="alert('Institutional MOU Google Form will be connected here soon.')" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-3 rounded-xl transition">Apply for MOU</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ALL PROGRAMMES & REGISTRATION TAB -->
+    <section id="tab-programmes" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-14 px-4 text-center border-b border-[#1f2937]">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-3">Student Registration & Specialized Programmes</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Select any track below to register and start your learning pathway.</p>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+        
+        <!-- SECTION 1: IT PROGRAMMES -->
+        <div>
+          <div class="border-b border-[#1f2937] pb-5 mb-8 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-code text-emerald-400"></i> IT & Technical Programmes
+            </h3>
+            <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/20">IT Specializations</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Business Intelligence & Data Analytics</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">PowerBI, SQL queries, Tableau dashboards, and data visualization strategies.</p>
+              </div>
+              <button onclick="openRegistrationModal('Business Intelligence & Data Analytics')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Front-End Web Development</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Build web platforms using HTML5, Tailwind CSS, JavaScript ES6+, and React.js.</p>
+              </div>
+              <button onclick="openRegistrationModal('Front-End Web Development')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Python Programming & Applied Database Management</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Python backend engineering, database architectures, MySQL, and API design.</p>
+              </div>
+              <button onclick="openRegistrationModal('Python Programming & Applied Database Management')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">UI/UX Design & Web Layout Specialization</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Wireframing, Figma prototyping, user research, and modern Web UI design systems.</p>
+              </div>
+              <button onclick="openRegistrationModal('UI/UX Design & Web Layout Specialization')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Enterprise MIS & Database Reporting</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Enterprise reporting models, ERP database integration, and administrative data flows.</p>
+              </div>
+              <button onclick="openRegistrationModal('Enterprise MIS & Database Reporting')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: NON-IT PROGRAMMES (UPDATED WITH COMMUNICATION & EMAIL ETIQUETTE COURSES) -->
+        <div>
+          <div class="border-b border-[#1f2937] pb-5 mb-8 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-chart-line text-cyan-400"></i> Non-IT & Corporate Tracks
+            </h3>
+            <span class="text-xs font-semibold text-cyan-400 bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/20">Non-IT Specializations</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Digital Marketing -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Digital Marketing & Performance Media</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">SEO, Performance Ads, Content Strategy, Analytics, and Social Media Marketing.</p>
+              </div>
+              <button onclick="openRegistrationModal('Digital Marketing & Performance Media')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <!-- Corporate HR -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Corporate HR & Talent Acquisition</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Recruitment life-cycle, HR Analytics, Payroll, Compliance, and People Management.</p>
+              </div>
+              <button onclick="openRegistrationModal('Corporate HR & Talent Acquisition')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <!-- NEW COURSE 1: Communication Skills -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Business Communication & Interpersonal Excellence</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Verbal fluency, active listening, executive presentations, cross-cultural workplace communication, and negotiation skills.</p>
+              </div>
+              <button onclick="openRegistrationModal('Business Communication & Interpersonal Excellence')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <!-- NEW COURSE 2: Email Etiquette -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Professional Email Etiquette & Executive Writing</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Formal email structure, professional tone, client communication, meeting summaries, and corporate document formatting.</p>
+              </div>
+              <button onclick="openRegistrationModal('Professional Email Etiquette & Executive Writing')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: CAMPUS TO CORPORATE -->
+        <div>
+          <div class="border-b border-[#1f2937] pb-5 mb-8 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-graduation-cap text-amber-400"></i> Campus to Corporate Readiness
+            </h3>
+            <span class="text-xs font-semibold text-amber-400 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-500/20">Placement Acceleration</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-amber-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded mb-4 inline-block">SOFT SKILLS & INTERVIEWS</span>
+                <h4 class="text-lg font-bold text-white mb-2">Corporate Readiness & Aptitude Mastery</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Resume building, mock interviews, communication skills, logic & quantitative aptitude training.</p>
+              </div>
+              <button onclick="openRegistrationModal('Corporate Readiness & Aptitude Mastery')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. INSTITUTIONAL MOU TAB -->
+    <section id="tab-partnership" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-14 px-4 text-center border-b border-[#1f2937]">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-3">College & Institutional Partnership Portal</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Empower your students through Eden EdTech Placement and Career Hub MOUs, campus drives, and skill workshops.</p>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+        
+
+        <!-- INSTITUTIONAL PARTNERSHIP OVERVIEW -->
+        <section class="bg-[#030712] border border-[#111827] rounded-2xl p-8 sm:p-10">
+          <div class="inline-flex items-center bg-emerald-500/10 border border-emerald-500/20 text-slate-200 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-lg mb-8">Institutional Partnership</div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-6">Partner with Eden EdTech for<br>Higher Campus Placements</h2>
+              <p class="text-slate-400 text-base leading-relaxed mb-7">We sign formal MOUs with colleges to integrate industry bootcamps directly into academic schedules. Strengthen student employability and support NAAC / NBA placement and skill-development criteria.</p>
+              <div class="space-y-4 text-sm text-slate-300 mb-8">
+                <div class="flex gap-3"><i class="fa-regular fa-circle-check text-emerald-400 mt-0.5"></i><p><strong class="text-slate-200">Guaranteed Placement Support:</strong> On-campus &amp; off-campus hiring drives with companies.</p></div>
+                <div class="flex gap-3"><i class="fa-regular fa-circle-check text-emerald-400 mt-0.5"></i><p><strong class="text-slate-200">NAAC / NBA Documentation:</strong> Student training and completion documentation support.</p></div>
+                <div class="flex gap-3"><i class="fa-regular fa-circle-check text-emerald-400 mt-0.5"></i><p><strong class="text-slate-200">Dedicated Trainer Support:</strong> Corporate-focused trainers and structured campus programmes.</p></div>
+              </div>
+              <button onclick="document.getElementById('mou-request-form').scrollIntoView({behavior:'smooth'})" class="bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-7 py-3.5 rounded-xl transition"><i class="fa-regular fa-file-lines mr-2"></i>Request Institutional MOU Proposal</button>
+            </div>
+            <div class="bg-[#0f172a] border border-[#253149] rounded-2xl p-7 sm:p-8">
+              <h3 class="text-white font-bold text-xl mb-7 flex items-center gap-3"><i class="fa-regular fa-clipboard text-emerald-400"></i> Institutional Compliance Checklist</h3>
+              <div class="space-y-4 text-sm">
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 1: Industry-Aligned Curriculum</span><span class="text-emerald-400 font-semibold">✓ 100% Covered</span></div>
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 2: Skill Enhancement Programs</span><span class="text-emerald-400 font-semibold">✓ Compliant</span></div>
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 3: Placement Statistics &amp; Records</span><span class="text-emerald-400 font-semibold">✓ Verified</span></div>
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 5: Student Progression Support</span><span class="text-emerald-400 font-semibold">✓ Audit Ready</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="bg-[#0b0f19] border border-emerald-500/30 p-8 sm:p-10 rounded-2xl relative overflow-hidden">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-3 max-w-3xl">
+              <span class="text-xs font-bold tracking-wider uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">Understanding Academic MOUs</span>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white">What is a Memorandum of Understanding (MOU)?</h3>
+              <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                A <strong>Memorandum of Understanding (MOU)</strong> is a formal legal agreement between Eden EdTech and an Educational Institution (College/University). It establishes a long-term strategic alliance to enhance student employability, facilitate industry-focused skill development, organize campus recruitment drives, and meet <strong>NAAC / NBA accreditation compliance</strong> requirements.
+              </p>
+            </div>
+            <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/20 p-5 rounded-2xl text-center">
+              <i class="fa-solid fa-file-contract text-4xl text-emerald-400 mb-2"></i>
+              <div class="text-xs text-slate-300 font-semibold">Official Academic Partner</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="mou-request-form" class="max-w-3xl mx-auto">
+          <div class="bg-[#0b0f19] p-8 sm:p-10 rounded-2xl border border-[#1f2937]">
+            <h3 class="text-xl font-bold border-b border-[#1f2937] pb-4 text-white mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-file-lines text-emerald-400"></i>
+              MOU Document & Institutional Partnership Request
+            </h3>
+            <form onsubmit="handlePartnershipSubmit(event)" class="space-y-5 text-sm">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Institution / College Name</label>
+                  <input type="text" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter college name">
+                </div>
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Contact Person / TPO Name</label>
+                  <input type="text" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter contact person name">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Official Email Address</label>
+                  <input type="email" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter official email">
+                </div>
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Phone / Mobile Number</label>
+                  <input type="tel" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter phone number">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-medium text-slate-300 mb-1.5">Partnership Requirements</label>
+                <textarea rows="4" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Describe expected student count, target branches, or specific MOU clauses needed..."></textarea>
+              </div>
+
+              <button type="submit" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3.5 rounded-xl text-base transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane text-sm"></i>
+                <span>Submit MOU & Document Request</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. ADMIN SECTION WITH HIGHLY PROFESSIONAL CERTIFICATE GENERATOR -->
+    <section id="tab-admin-section" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-8 px-4 border-b border-[#1f2937]">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <h2 class="text-2xl font-bold flex items-center gap-3">
+            <i class="fa-solid fa-user-shield text-emerald-400"></i> Eden EdTech Secure Owner Portal
+          </h2>
+          <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3.5 py-1.5 rounded-full font-semibold">Owner Admin Session</span>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 py-10 space-y-12">
+        
+        <!-- STATS -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="bg-[#0b0f19] p-6 rounded-2xl border border-[#1f2937]">
+            <div class="text-slate-400 text-sm mb-1">Total Student Enrolments</div>
+            <div id="admin-stat-total" class="text-3xl sm:text-4xl font-bold text-white">0</div>
+          </div>
+          <div class="bg-[#0b0f19] p-6 rounded-2xl border border-[#1f2937]">
+            <div class="text-slate-400 text-sm mb-1">IT Programmes Enrolled</div>
+            <div id="admin-stat-it" class="text-3xl sm:text-4xl font-bold text-emerald-400">0</div>
+          </div>
+          <div class="bg-[#0b0f19] p-6 rounded-2xl border border-[#1f2937]">
+            <div class="text-slate-400 text-sm mb-1">Non-IT / Corporate Enrolled</div>
+            <div id="admin-stat-nonit" class="text-3xl sm:text-4xl font-bold text-cyan-400">0</div>
+          </div>
+        </div>
+
+        <!-- ENHANCED CERTIFICATE GENERATOR MODULE WITH FONT & DROPDOWN CONTROLS -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-8">
+          <div class="border-b border-[#1f2937] pb-4 mb-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+            <div>
+              <h3 class="font-bold text-white text-xl flex items-center gap-2">
+                <i class="fa-solid fa-award text-amber-400"></i> Professional Certificate Studio
+              </h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">Create premium, print-ready professional certificates with student auto-fill, course selection, certificate ID, fonts, and sizing controls.</p>
+            </div>
+            <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs transition flex items-center gap-2 self-start sm:self-auto shadow-lg shadow-amber-950/40">
+              <i class="fa-solid fa-print text-sm"></i> Print Certificate
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form Controls -->
+            <div class="space-y-4 bg-[#030712] p-6 rounded-xl border border-[#1f2937]">
+              
+              <div>
+                <label class="block text-xs font-semibold text-amber-400 mb-1">1. Choose Enrolled Student (Auto-Fill)</label>
+                <select id="cert-student-select" onchange="loadStudentToCert()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                  <option value="">-- Choose Enrolled Student --</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Student Full Name</label>
+                <input type="text" id="cert-name" oninput="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500" placeholder="e.g. Ananya Patel">
+              </div>
+
+              <!-- COURSE DROPDOWN -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Select Course / Specialization</label>
+                <select id="cert-course-dropdown" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                  <option value="Business Intelligence & Data Analytics">Business Intelligence & Data Analytics</option>
+                  <option value="Front-End Web Development">Front-End Web Development</option>
+                  <option value="Python Programming & Applied Database Management">Python Programming & Applied Database Management</option>
+                  <option value="UI/UX Design & Web Layout Specialization">UI/UX Design & Web Layout Specialization</option>
+                  <option value="Enterprise MIS & Database Reporting">Enterprise MIS & Database Reporting</option>
+                  <option value="Digital Marketing & Performance Media">Digital Marketing & Performance Media</option>
+                  <option value="Corporate HR & Talent Acquisition">Corporate HR & Talent Acquisition</option>
+                  <option value="Business Communication & Interpersonal Excellence">Business Communication & Interpersonal Excellence</option>
+                  <option value="Professional Email Etiquette & Executive Writing">Professional Email Etiquette & Executive Writing</option>
+                  <option value="Corporate Readiness & Aptitude Mastery">Corporate Readiness & Aptitude Mastery</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Issue Date</label>
+                  <input type="date" id="cert-date" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Certificate ID</label>
+                  <input type="text" id="cert-id" value="EDEN-2026-904" oninput="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+              </div>
+
+              <div class="border-t border-[#1f2937] pt-4">
+                <label class="block text-xs font-semibold text-amber-400 mb-1">Certificate Template</label>
+                <select id="cert-template" onchange="switchCertificateTemplate()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                  <option value="black">Template 1 — Premium Black & Gold</option>
+                  <option value="navy">Template 2 — Executive Navy, White & Gold</option>
+                </select>
+              </div>
+
+              <!-- FONT STYLE & SIZE CONTROLS -->
+              <div class="border-t border-[#1f2937] pt-4 space-y-3">
+                <p class="text-xs font-bold text-cyan-400">Typography Settings</p>
+                
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Font Style</label>
+                  <select id="cert-font-style" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <option value="cert-font-cinzel">Cinzel (Formal & Premium)</option>
+                    <option value="cert-font-playfair">Playfair Display (Classic Serif)</option>
+                    <option value="cert-font-inter">Inter (Modern & Clean)</option>
+                    <option value="cert-font-montserrat">Montserrat (Executive Sans)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Student Name Size</label>
+                  <select id="cert-name-size" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <option value="text-2xl sm:text-3xl">Medium (24px)</option>
+                    <option value="text-3xl sm:text-4xl" selected>Large (32px)</option>
+                    <option value="text-4xl sm:text-5xl">Extra Large (40px)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Course Title Size</label>
+                  <select id="cert-course-size" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <option value="text-base sm:text-lg">Standard (18px)</option>
+                    <option value="text-lg sm:text-xl" selected>Large (20px)</option>
+                    <option value="text-xl sm:text-2xl">Extra Large (24px)</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PREMIUM BLACK & GOLD PROFESSIONAL CERTIFICATE -->
+            <div class="lg:col-span-2 flex justify-center items-center">
+              <div id="certificate-black" class="certificate-template print-selected w-full bg-[#080808] text-white p-3 sm:p-5 rounded-xl shadow-2xl relative overflow-hidden cert-font-cinzel border border-[#d4af37]">
+                <div class="relative border-[3px] border-[#d4af37] p-1">
+                  <div class="relative border border-[#8f7628] px-7 sm:px-12 py-8 sm:py-10 overflow-hidden min-h-[520px] flex flex-col justify-between">
+                    <!-- understated premium watermark -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-[0.035] pointer-events-none">
+                      <i class="fa-solid fa-graduation-cap text-[240px] text-[#f5d76e]"></i>
+                    </div>
+                    <div class="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-[#d4af37] m-3"></div>
+                    <div class="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-[#d4af37] m-3"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-[#d4af37] m-3"></div>
+                    <div class="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-[#d4af37] m-3"></div>
+
+                    <div class="relative z-10 text-center">
+                      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-[#d4af37] mb-3">
+                        <i class="fa-solid fa-graduation-cap text-2xl text-[#d4af37]"></i>
+                      </div>
+                      <h2 class="text-2xl sm:text-3xl font-black tracking-[0.18em] text-[#f6e7a7]">EDEN EDTECH</h2>
+                      <p class="text-[9px] sm:text-[10px] tracking-[0.35em] uppercase text-[#c8aa4c] mt-1">Placement &amp; Career Hub</p>
+                      <div class="flex items-center justify-center gap-3 mt-4">
+                        <span class="h-px w-16 bg-[#806a24]"></span><span class="w-1.5 h-1.5 rotate-45 bg-[#d4af37]"></span><span class="h-px w-16 bg-[#806a24]"></span>
+                      </div>
+                    </div>
+
+                    <div class="relative z-10 text-center py-5">
+                      <p class="text-[10px] sm:text-xs tracking-[0.28em] uppercase text-[#d4af37] mb-2">Certificate of</p>
+                      <h3 class="text-2xl sm:text-4xl font-bold tracking-[0.08em] text-white uppercase">Professional Completion</h3>
+                      <p class="text-[10px] sm:text-xs font-sans text-neutral-400 mt-4">This distinguished certificate is proudly presented to</p>
+                      <h4 id="preview-cert-name" class="text-3xl sm:text-4xl font-black text-[#f4d66f] mt-4 mb-3 tracking-wide">ANANYA PATEL</h4>
+                      <div class="w-2/3 max-w-md h-px bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mx-auto"></div>
+                      <p class="text-[10px] sm:text-xs font-sans text-neutral-400 mt-5">for successfully completing the professional certification programme in</p>
+                      <h5 id="preview-cert-course" class="text-lg sm:text-xl font-bold text-white mt-2 tracking-wide uppercase">BUSINESS INTELLIGENCE &amp; DATA ANALYTICS</h5>
+                      <p class="text-[10px] sm:text-[11px] font-sans text-neutral-400 max-w-xl mx-auto leading-relaxed mt-4">
+                        Awarded in recognition of successful completion of the prescribed training, practical learning and assessment requirements established by Eden EdTech.
+                      </p>
+                    </div>
+
+                    <div class="relative z-10">
+                      <div class="grid grid-cols-3 items-end gap-3 pt-5 border-t border-[#4d421e]">
+                        <div class="text-left">
+                          <p id="preview-cert-date" class="text-[10px] font-sans font-semibold text-[#f6e7a7]">Date: 29/09/2026</p>
+                          <p id="preview-cert-id" class="text-[9px] font-sans text-neutral-500 mt-1">ID: EDEN-2026-904</p>
+                          <p class="text-[8px] font-sans uppercase tracking-wider text-neutral-600 mt-1">Credential Reference</p>
+                        </div>
+                        <div class="flex justify-center">
+                          <div class="w-16 h-16 rounded-full border-2 border-[#d4af37] outline outline-1 outline-offset-2 outline-[#6f5c20] flex flex-col items-center justify-center text-[#d4af37] bg-[#11100b] shadow-lg">
+                            <i class="fa-solid fa-award text-xl"></i>
+                            <span class="text-[6px] tracking-wider mt-1">OFFICIAL</span>
+                          </div>
+                        </div>
+                        <div class="text-right">
+                          <div class="text-[#f6e7a7] italic font-semibold text-sm border-b border-[#806a24] pb-1 inline-block">Eden EdTech Board</div>
+                          <p class="text-[8px] sm:text-[9px] font-sans uppercase tracking-wider text-neutral-500 mt-2">Authorized Signatory</p>
+                        </div>
+                      </div>
+                      <p class="text-center text-[7px] sm:text-[8px] font-sans tracking-[0.16em] uppercase text-neutral-600 mt-5">Eden EdTech Placement &amp; Career Hub • Professional Credential</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- EXECUTIVE NAVY / WHITE / GOLD TEMPLATE -->
+              <div id="certificate-navy" class="certificate-template hidden w-full bg-[#fbfaf6] text-[#102a4c] p-4 sm:p-6 rounded-xl shadow-2xl relative overflow-hidden cert-font-cinzel border border-[#c9a84c]">
+                <div class="relative min-h-[520px] border-[3px] border-[#102a4c] bg-[#fbfaf6] px-8 sm:px-12 py-9 flex flex-col justify-between overflow-hidden">
+                  <div class="absolute -top-24 -left-20 w-80 h-52 bg-[#102a4c] rotate-[-12deg] rounded-[50%]"></div>
+                  <div class="absolute -top-20 left-20 w-72 h-28 bg-[#c9a84c] rotate-[-10deg] rounded-[50%] opacity-95"></div>
+                  <div class="absolute -bottom-28 -right-20 w-96 h-56 bg-[#102a4c] rotate-[-10deg] rounded-[50%]"></div>
+                  <div class="absolute -bottom-16 right-28 w-64 h-20 bg-[#c9a84c] rotate-[-12deg] rounded-[50%]"></div>
+                  <div class="relative z-10 text-center pt-6">
+                    <div class="inline-flex w-14 h-14 items-center justify-center rounded-full border-2 border-[#c9a84c] bg-white shadow"><i class="fa-solid fa-graduation-cap text-2xl text-[#102a4c]"></i></div>
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-[0.16em] mt-3">EDEN EDTECH</h2>
+                    <p class="text-[9px] tracking-[0.32em] uppercase text-[#9a7a25]">Placement &amp; Career Hub</p>
+                  </div>
+                  <div class="relative z-10 text-center py-3">
+                    <h3 class="text-3xl sm:text-4xl font-black tracking-[0.08em]">CERTIFICATE</h3>
+                    <p class="text-sm tracking-[0.35em] uppercase text-[#9a7a25] mt-1">of Professional Completion</p>
+                    <div class="w-40 h-px bg-[#c9a84c] mx-auto my-4"></div>
+                    <p class="text-[11px] font-sans text-slate-500">This certificate is proudly presented to</p>
+                    <h4 id="navy-cert-name" class="text-3xl sm:text-4xl font-black text-[#102a4c] mt-4 mb-3">ANANYA PATEL</h4>
+                    <p class="text-[11px] font-sans text-slate-500 mt-3">for successfully completing the professional certification programme in</p>
+                    <h5 id="navy-cert-course" class="text-lg sm:text-xl font-bold text-[#9a7a25] mt-2 uppercase">BUSINESS INTELLIGENCE &amp; DATA ANALYTICS</h5>
+                    <p class="text-[10px] font-sans text-slate-500 max-w-xl mx-auto mt-4 leading-relaxed">Awarded in recognition of successful completion of the prescribed training, practical learning and assessment requirements established by Eden EdTech.</p>
+                  </div>
+                  <div class="relative z-10 grid grid-cols-3 items-end gap-3 pt-5">
+                    <div class="text-left"><p id="navy-cert-date" class="text-[10px] font-sans font-semibold">Date: 29/09/2026</p><p id="navy-cert-id" class="text-[9px] font-sans text-slate-500 mt-1">ID: EDEN-2026-904</p></div>
+                    <div class="flex justify-center"><div class="w-16 h-16 rounded-full border-2 border-[#c9a84c] flex flex-col items-center justify-center bg-white text-[#9a7a25]"><i class="fa-solid fa-award text-xl"></i><span class="text-[6px] mt-1">OFFICIAL</span></div></div>
+                    <div class="text-right"><div class="italic font-semibold text-sm border-b border-[#c9a84c] pb-1 inline-block">Eden EdTech Board</div><p class="text-[8px] font-sans uppercase tracking-wider text-slate-500 mt-2">Authorized Signatory</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TESTIMONIAL MANAGEMENT -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-8">
+          <div class="border-b border-[#1f2937] pb-4 mb-6">
+            <h3 class="font-bold text-white text-xl flex items-center gap-2"><i class="fa-solid fa-star text-yellow-400"></i> Testimonials Manager</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">Add a student photo, name, role or college, and testimonial text. Saved testimonials appear only on the About Us page.</p>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+            <input id="testimonial-name" placeholder="Name" class="lg:col-span-1 bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+            <input id="testimonial-role" placeholder="Role / College" class="lg:col-span-1 bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+            <input id="testimonial-photo" type="file" accept="image/*" class="lg:col-span-1 bg-[#030712] border border-[#1f2937] rounded-xl px-3 py-2.5 text-xs text-slate-300">
+            <textarea id="testimonial-text" placeholder="Testimonial message" rows="2" class="lg:col-span-2 bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500"></textarea>
+          </div>
+          <button onclick="addTestimonial()" class="mt-4 bg-[#10b981] hover:bg-[#059669] text-white font-semibold px-5 py-2.5 rounded-xl text-sm"><i class="fa-solid fa-plus mr-1"></i> Add Testimonial</button>
+          <div id="admin-testimonials-list" class="mt-6 space-y-3"></div>
+        </div>
+
+        <!-- SOURCE CODE -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-cyan-500/20 p-8">
+          <div class="flex flex-col sm:flex-row justify-between gap-4 sm:items-center mb-5">
+            <div>
+              <h3 class="font-bold text-white text-xl flex items-center gap-2"><i class="fa-solid fa-code text-cyan-400"></i> Website Source Code</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">View the current HTML source or download a complete copy of the website.</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="refreshSourceCode()" class="border border-[#1f2937] bg-[#030712] text-slate-200 px-4 py-2.5 rounded-xl text-xs font-semibold hover:border-cyan-500/50">Refresh Code</button>
+              <button onclick="downloadSourceCode()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-download mr-1"></i> Download HTML</button>
+            </div>
+          </div>
+          <textarea id="source-code-viewer" spellcheck="false" readonly class="w-full h-80 bg-[#020617] border border-[#1f2937] rounded-xl p-4 text-[11px] leading-relaxed text-cyan-100 font-mono focus:outline-none"></textarea>
+        </div>
+
+        <!-- REGISTERED STUDENTS TABLE -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-white text-base sm:text-lg">Registered Students Database</h3>
+            <button onclick="clearAdminData()" class="text-xs text-red-400 hover:text-red-300 border border-red-500/30 bg-red-950/20 px-4 py-1.5 rounded-lg">Clear All Registrations</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-300">
+              <thead>
+                <tr class="border-b border-[#1f2937] text-slate-400">
+                  <th class="py-3">Date</th>
+                  <th class="py-3">Name</th>
+                  <th class="py-3">Email</th>
+                  <th class="py-3">Phone</th>
+                  <th class="py-3">Selected Programme</th>
+                </tr>
+              </thead>
+              <tbody id="admin-student-table-body">
+                <tr><td colspan="5" class="py-6 text-center text-slate-500">No student registrations found.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-[#030712] text-slate-500 text-xs sm:text-sm py-10 border-t border-[#111827]">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p>&copy; 2026 Eden EdTech Placement and Career Hub. All rights reserved.</p>
+      
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-[#0b0f19] px-4 py-2 rounded-lg border border-[#1f2937] text-xs text-slate-300 font-medium">
+          <i class="fa-solid fa-sparkles text-cyan-400"></i>
+          <span>Eden EdTech Placement & Career Hub</span>
+        </div>
+        <!-- Hidden Owner Access Icon -->
+        <button onclick="promptOwnerLogin()" title="Owner Admin Access" class="text-slate-700 hover:text-slate-500 transition px-2 py-1">
+          <i class="fa-solid fa-lock text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= REGISTRATION MODAL ================= -->
+  <div id="modal-registration" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b0f19] border border-[#1f2937] rounded-2xl shadow-2xl max-w-md w-full p-7 relative text-white">
+      <button onclick="closeRegistrationModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-lg font-bold text-white mb-1">Student Course Registration</h3>
+      <p id="modal-selected-course" class="text-xs text-emerald-400 font-semibold mb-5">Course Name</p>
+
+      <form onsubmit="handleRegistrationSubmit(event)" class="space-y-4 text-xs sm:text-sm">
+        <div>
+          <label class="block font-medium mb-1 text-slate-300">Full Name</label>
+          <input type="text" id="reg-name" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block font-medium mb-1 text-slate-300">Email Address</label>
+          <input type="email" id="reg-email" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block font-medium mb-1 text-slate-300">Phone Number</label>
+          <input type="tel" id="reg-phone" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <button type="submit" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition mt-2">
+          Complete Registration
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let currentCourse = '';
+    let registrations = JSON.parse(localStorage.getItem('eden_registrations')) || [];
+
+    // Set today's date in certificate date input by default
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      const dateElem = document.getElementById('cert-date');
+      if (dateElem) dateElem.value = today;
+      renderCompanies();
+      renderTestimonials();
+      refreshSourceCode();
+    });
+
+    const defaultCompanies = ['Infosys', 'Wipro', 'Accenture', 'Cognizant', 'Tech Mahindra', 'Capgemini', 'IBM', 'HCLTech', 'TCS', 'Deloitte', 'Genpact', 'Concentrix'];
+
+    const defaultTestimonials = [
+      {name:'Ananya Patel', role:'Business Analytics Graduate', photo:'https://i.pravatar.cc/160?img=47', text:'The programme gave me practical exposure to dashboards, SQL and interview preparation. The structured training made me much more confident.'},
+      {name:'Rahul Sharma', role:'Campus Placement Student', photo:'https://i.pravatar.cc/160?img=12', text:'The mock interviews and corporate readiness sessions helped me understand what recruiters expect and how to present my skills professionally.'},
+      {name:'Priya Nair', role:'BCA Graduate', photo:'https://i.pravatar.cc/160?img=32', text:'I liked the balance between technical learning and communication training. The mentors were supportive throughout the placement preparation journey.'},
+      {name:'Ishwarya J', role:'MCA • Concentrix – Bengaluru • ₹8.4 LPA • February 2026', photo:'data:image/jpeg;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHrTyT77k+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avvw+Avv2D4E9b5IAAAAAAAAAAAAAAAAAAAAAAAAAAAASiOk5o6TmjpOaOk5o6TmjpOaOk5o6TmjpOaOk5o6TmjpOaOk5o6TmjpOaOk5olEAAAAAAAAAAAAAAP/9oADAMBAAIQAxEAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATzzzDDDDDDDDDDzzwgAAAAAAAAAAAAAAAAAAAAAAAAAAAABDDDDDDDDDDDDDDCAAAAAAAAAAAAAAAD/2gAMAwEAAhADEQAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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', text:'Eden EdTech helped me strengthen my professional skills and prepare confidently for interviews. Their practical training and placement guidance played an important role in my career journey.'}
+    ];
+    let testimonials = JSON.parse(localStorage.getItem('eden_testimonials')) || defaultTestimonials;
+    if (!testimonials.some(t => t.name === 'Ishwarya J' && String(t.role || '').includes('Concentrix'))) {
+      testimonials.push(defaultTestimonials[defaultTestimonials.length - 1]);
+      localStorage.setItem('eden_testimonials', JSON.stringify(testimonials));
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+    }
+
+    function renderCompanies() {
+      const make = () => defaultCompanies.map(name => `
+        <div class="flex items-center gap-2 whitespace-nowrap text-slate-300 font-semibold text-sm sm:text-base">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center"><i class="fa-solid fa-building text-emerald-400 text-xs"></i></span>
+          <span>${escapeHTML(name)}</span>
+        </div>`).join('');
+      document.getElementById('company-set-1').innerHTML = make();
+      document.getElementById('company-set-2').innerHTML = make();
+    }
+
+    function renderTestimonials() {
+      const publicBox = document.getElementById('public-testimonials');
+      if (publicBox) {
+        publicBox.innerHTML = testimonials.map(t => `
+          <article class="testimonial-card bg-[#0b0f19] border border-[#1f2937] rounded-2xl p-7 text-center">
+            <img src="${escapeHTML(t.photo)}" alt="${escapeHTML(t.name)}" class="w-20 h-20 rounded-full object-cover mx-auto border-4 border-emerald-500/20 shadow-lg">
+            <div class="flex justify-center gap-1 text-amber-400 mt-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="text-slate-300 text-sm leading-relaxed mt-4 min-h-[90px]">“${escapeHTML(t.text)}”</p>
+            <h4 class="text-white font-bold mt-5">${escapeHTML(t.name)}</h4>
+            <p class="text-emerald-400 text-xs font-semibold mt-1">${escapeHTML(t.role)}</p>
+          </article>`).join('');
+      }
+      const adminBox = document.getElementById('admin-testimonials-list');
+      if (adminBox) {
+        adminBox.innerHTML = testimonials.map((t,i) => `
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 bg-[#030712] border border-[#1f2937] rounded-xl p-3">
+            <img src="${escapeHTML(t.photo)}" class="w-12 h-12 rounded-full object-cover" alt="">
+            <div class="flex-1"><div class="text-white text-sm font-bold">${escapeHTML(t.name)}</div><div class="text-emerald-400 text-xs">${escapeHTML(t.role)}</div><div class="text-slate-400 text-xs mt-1">${escapeHTML(t.text)}</div></div>
+            <div class="flex gap-2"><button onclick="editTestimonial(${i})" class="text-cyan-300 border border-cyan-500/20 px-3 py-2 rounded-lg text-xs">Edit</button><button onclick="deleteTestimonial(${i})" class="text-red-400 border border-red-500/20 px-3 py-2 rounded-lg text-xs">Delete</button></div>
+          </div>`).join('');
+      }
+    }
+
+    function addTestimonial() {
+      const name = document.getElementById('testimonial-name').value.trim();
+      const role = document.getElementById('testimonial-role').value.trim();
+      const text = document.getElementById('testimonial-text').value.trim();
+      const file = document.getElementById('testimonial-photo').files[0];
+      if (!name || !role || !text) { alert('Please enter the name, role/college and testimonial.'); return; }
+      const save = photo => {
+        testimonials.push({name, role, text, photo: photo || 'https://i.pravatar.cc/160?u=' + encodeURIComponent(name)});
+        localStorage.setItem('eden_testimonials', JSON.stringify(testimonials));
+        renderTestimonials();
+        document.getElementById('testimonial-name').value='';
+        document.getElementById('testimonial-role').value='';
+        document.getElementById('testimonial-text').value='';
+        document.getElementById('testimonial-photo').value='';
+      };
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => save(e.target.result);
+        reader.readAsDataURL(file);
+      } else save('');
+    }
+
+    function editTestimonial(index) {
+      const t = testimonials[index];
+      const name = prompt('Student name:', t.name); if (name === null) return;
+      const role = prompt('Role / College:', t.role); if (role === null) return;
+      const message = prompt('Testimonial:', t.text); if (message === null) return;
+      const changePhoto = confirm('Do you want to change the photo too?');
+      const saveEdit = (photo) => {
+        testimonials[index] = {name: name.trim() || t.name, role: role.trim() || t.role, text: message.trim() || t.text, photo: photo || t.photo};
+        localStorage.setItem('eden_testimonials', JSON.stringify(testimonials)); renderTestimonials();
+      };
+      if (changePhoto) {
+        const input=document.createElement('input'); input.type='file'; input.accept='image/*';
+        input.onchange=()=>{ const f=input.files[0]; if(!f) return; const r=new FileReader(); r.onload=e=>saveEdit(e.target.result); r.readAsDataURL(f); }; input.click();
+      } else saveEdit(t.photo);
+    }
+
+    function deleteTestimonial(index) {
+      if (confirm('Delete this testimonial?')) {
+        testimonials.splice(index,1);
+        localStorage.setItem('eden_testimonials', JSON.stringify(testimonials));
+        renderTestimonials();
+      }
+    }
+
+    function refreshSourceCode() {
+      const viewer = document.getElementById('source-code-viewer');
+      if (viewer) viewer.value = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    }
+
+    function downloadSourceCode() {
+      refreshSourceCode();
+      const code = document.getElementById('source-code-viewer').value;
+      const blob = new Blob([code], {type:'text/html;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'eden-edtech-website.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      
+      let targetId = tabId;
+      if (tabId === 'admin-section' || tabId === 'admin') {
+        targetId = 'admin-section';
+        renderAdminTable();
+        populateCertDropdown();
+        renderTestimonials();
+        refreshSourceCode();
+      }
+
+      const selectedTab = document.getElementById(`tab-${targetId}`);
+      if (selectedTab) selectedTab.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function promptOwnerLogin() {
+      const pwd = prompt("Enter Owner Admin Password:");
+      if (pwd === "admin" || pwd === "owner" || pwd === "1234") {
+        switchTab('admin-section');
+      } else if (pwd !== null) {
+        alert("Incorrect Admin Password.");
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function openRegistrationModal(courseName) {
+      currentCourse = courseName;
+      document.getElementById('modal-selected-course').innerText = courseName;
+      document.getElementById('modal-registration').classList.remove('hidden');
+    }
+
+    function closeRegistrationModal() {
+      document.getElementById('modal-registration').classList.add('hidden');
+    }
+
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const newReg = {
+        date: new Date().toLocaleDateString(),
+        name: document.getElementById('reg-name').value,
+        email: document.getElementById('reg-email').value,
+        phone: document.getElementById('reg-phone').value,
+        course: currentCourse
+      };
+
+      registrations.push(newReg);
+      localStorage.setItem('eden_registrations', JSON.stringify(registrations));
+      alert(`Registration successful for ${newReg.name}!`);
+      closeRegistrationModal();
+      e.target.reset();
+    }
+
+    function handlePartnershipSubmit(e) {
+      e.preventDefault();
+      alert('Institutional MOU & Document request submitted successfully!');
+      e.target.reset();
+    }
+
+    function clearAdminData() {
+      if (confirm('Are you sure you want to clear all registrations?')) {
+        registrations = [];
+        localStorage.removeItem('eden_registrations');
+        renderAdminTable();
+        populateCertDropdown();
+      }
+    }
+
+    function populateCertDropdown() {
+      const dropdown = document.getElementById('cert-student-select');
+      if (!dropdown) return;
+      dropdown.innerHTML = '<option value="">-- Choose Enrolled Student --</option>';
+      registrations.forEach((reg, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.innerText = `${reg.name} (${reg.course})`;
+        dropdown.appendChild(opt);
+      });
+    }
+
+    function loadStudentToCert() {
+      const dropdown = document.getElementById('cert-student-select');
+      const idx = dropdown.value;
+      if (idx !== "" && registrations[idx]) {
+        const student = registrations[idx];
+        document.getElementById('cert-name').value = student.name;
+        
+        const courseDropdown = document.getElementById('cert-course-dropdown');
+        if (courseDropdown) courseDropdown.value = student.course;
+        
+        updateCertPreview();
+      }
+    }
+
+    function switchCertificateTemplate() {
+      const choice = document.getElementById('cert-template').value;
+      document.querySelectorAll('.certificate-template').forEach(el => { el.classList.add('hidden'); el.classList.remove('print-selected'); });
+      const selected = document.getElementById(choice === 'navy' ? 'certificate-navy' : 'certificate-black');
+      selected.classList.remove('hidden'); selected.classList.add('print-selected');
+      updateCertPreview();
+    }
+
+    function updateCertPreview() {
+      const name = document.getElementById('cert-name').value || 'ANANYA PATEL';
+      const course = document.getElementById('cert-course-dropdown').value || 'BUSINESS INTELLIGENCE & DATA ANALYTICS';
+      const dateVal = document.getElementById('cert-date').value;
+      const certId = document.getElementById('cert-id').value || 'EDEN-2026-904';
+      const dateText = 'Date: ' + (dateVal ? new Date(dateVal+'T00:00:00').toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB'));
+      [['preview-cert-name',name],['preview-cert-course',course],['navy-cert-name',name],['navy-cert-course',course]].forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.innerText=v.toUpperCase();});
+      [['preview-cert-date',dateText],['navy-cert-date',dateText],['preview-cert-id','ID: '+certId],['navy-cert-id','ID: '+certId]].forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.innerText=v;});
+      const fontStyle=document.getElementById('cert-font-style').value;
+      document.querySelectorAll('.certificate-template').forEach(e=>{e.classList.remove('cert-font-cinzel','cert-font-playfair','cert-font-inter','cert-font-montserrat');e.classList.add(fontStyle);});
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-student-table-body');
+      const totalStat = document.getElementById('admin-stat-total');
+      const itStat = document.getElementById('admin-stat-it');
+      const nonItStat = document.getElementById('admin-stat-nonit');
+
+      if (!tbody) return;
+
+      if (registrations.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-slate-500">No student registrations found.</td></tr>';
+        if (totalStat) totalStat.innerText = '0';
+        if (itStat) itStat.innerText = '0';
+        if (nonItStat) nonItStat.innerText = '0';
+        return;
+      }
+
+      let itCount = 0;
+      let nonItCount = 0;
+
+      tbody.innerHTML = registrations.map(reg => {
+        const lowerC = reg.course.toLowerCase();
+        if (lowerC.includes('digital') || lowerC.includes('hr') || lowerC.includes('communication') || lowerC.includes('email') || lowerC.includes('corporate readiness')) {
+          nonItCount++;
+        } else {
+          itCount++;
+        }
+        return `
+          <tr class="border-b border-[#1f2937]">
+            <td class="py-3">${reg.date}</td>
+            <td class="py-3 font-medium text-white">${reg.name}</td>
+            <td class="py-3">${reg.email}</td>
+            <td class="py-3">${reg.phone || 'N/A'}</td>
+            <td class="py-3 text-emerald-400 font-medium">${reg.course}</td>
+          </tr>
+        `;
+      }).join('');
+
+      if (totalStat) totalStat.innerText = registrations.length;
+      if (itStat) itStat.innerText = itCount;
+      if (nonItStat) nonItStat.innerText = nonItCount;
+    }
+  </script>
+</body>
+</html>
