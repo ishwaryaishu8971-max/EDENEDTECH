@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eden EdTech Placement and Career Hub</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts for Certificate & Web App -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background-color: #030712;
+      color: #f3f4f6;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+    .logo-gradient-box {
+      background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    }
+
+    /* Professional Certificate Styles */
+    .cert-font-cinzel { font-family: 'Cinzel', serif; }
+    .cert-font-playfair { font-family: 'Playfair Display', serif; }
+    .cert-font-montserrat { font-family: 'Montserrat', sans-serif; }
+    .cert-font-inter { font-family: 'Inter', sans-serif; }
+
+    .company-marquee {
+      overflow: hidden;
+      position: relative;
+    }
+    .company-track {
+      display: flex;
+      width: max-content;
+      animation: companyScroll 28s linear infinite;
+    }
+    .company-track:hover { animation-play-state: paused; }
+    @keyframes companyScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .testimonial-card { transition: transform .25s ease, border-color .25s ease; }
+    .testimonial-card:hover { transform: translateY(-5px); border-color: rgba(16,185,129,.45); }
+
+    @media print {
+      body * { visibility: hidden; }
+      .certificate-template.print-selected, .certificate-template.print-selected * { visibility: visible; }
+      .certificate-template.print-selected { 
+        position: fixed; 
+        left: 0; 
+        top: 0; 
+        width: 100vw; 
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen antialiased bg-[#030712] text-slate-100">
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header class="bg-[#030712]/95 backdrop-blur-md text-white sticky top-0 z-40 border-b border-[#111827]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- LOGO & BRANDING -->
+      <div class="flex items-center space-x-3 cursor-pointer shrink-0" onclick="switchTab('home')">
+        <div class="relative w-11 h-11 rounded-xl p-[1.5px] logo-gradient-box shadow-lg shadow-emerald-950/50 flex items-center justify-center">
+          <div class="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center relative overflow-hidden">
+            <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-cyan-400/40 blur-sm rounded-full"></div>
+            <div class="absolute -top-2 -left-2 w-6 h-6 bg-emerald-500/40 blur-sm rounded-full"></div>
+            <i class="fa-solid fa-graduation-cap text-xl bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent relative z-10"></i>
+          </div>
+        </div>
+        <div>
+          <h1 class="text-lg font-extrabold tracking-tight leading-none">
+            <span class="text-emerald-400">Eden</span> <span class="text-cyan-400">EdTech</span>
+          </h1>
+          <p class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase mt-1">PLACEMENT & CAREER HUB</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center space-x-2 text-sm font-medium text-slate-300">
+        <button onclick="switchTab('home')" class="px-4 py-2 rounded-lg transition hover:text-white">About Us</button>
+        <button onclick="switchTab('programmes')" class="px-4 py-2 rounded-lg transition hover:text-white">Student Registration</button>
+        <button onclick="switchTab('partnership')" class="px-4 py-2 rounded-lg text-slate-300 hover:text-white border border-[#1f2937] bg-[#0b0f19] ml-2">College Partner & MOU</button>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="hidden sm:block shrink-0">
+        <button onclick="switchTab('apply')" class="bg-[#10b981] hover:bg-[#059669] text-white font-semibold text-sm px-6 py-2.5 rounded-lg shadow-lg shadow-emerald-950/50 transition">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-300 hover:text-white p-2">
+        <i class="fa-solid fa-bars text-2xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-[#0b0f19] border-b border-[#1f2937] px-4 pt-3 pb-5 space-y-2 text-base">
+      <button onclick="switchTab('home')" class="block w-full text-left px-3 py-2 rounded-md text-slate-200">About Us</button>
+      <button onclick="switchTab('programmes')" class="block w-full text-left px-3 py-2 rounded-md text-slate-200">Student Registration & Programmes</button>
+      <button onclick="switchTab('partnership')" class="block w-full text-left px-3 py-2 rounded-md text-slate-200">Institutional MOU & Partner</button>
+      <button onclick="switchTab('apply')" class="block w-full text-left px-3 py-2 rounded-md text-emerald-400 font-semibold">Apply Now</button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-grow">
+
+    <!-- 1. HOME / ABOUT US TAB -->
+    <section id="tab-home" class="tab-content active">
+      <div class="bg-[#030712] text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div class="max-w-5xl mx-auto relative z-10">
+          
+          <div class="inline-flex items-center gap-2 bg-[#0b101d] border border-emerald-500/40 text-emerald-400 text-sm px-4 py-2 rounded-full font-medium mb-8 shadow-sm">
+            <i class="fa-solid fa-sparkles text-xs"></i>
+            <span>Eden EdTech Placement and Career Hub</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-6 leading-tight text-white">
+            Bridging Academics &<br>
+            Industry with <span class="text-[#10b981]">Zero Skill</span><br>
+            <span class="text-[#38bdf8]">Gaps</span>
+          </h1>
+
+          <p class="text-slate-300 text-lg sm:text-xl mb-10 max-w-3xl mx-auto leading-relaxed font-normal">
+            Empowering students and institutions with hands-on technical mastery, corporate readiness training, and direct placement opportunities with companies that hire our trained students.
+          </p>
+
+          <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+            <button onclick="switchTab('programmes')" class="w-full sm:w-auto bg-[#10b981] hover:bg-[#059669] text-white font-bold px-8 py-4 rounded-xl text-base shadow-lg shadow-emerald-950/50 transition flex items-center justify-center gap-2">
+              <span>Explore Programmes & Register</span>
+              <i class="fa-solid fa-arrow-right text-sm"></i>
+            </button>
+            <button onclick="switchTab('partnership')" class="w-full sm:w-auto bg-[#0b101d] hover:bg-[#151c2e] text-slate-200 border border-[#1f2937] font-semibold px-8 py-4 rounded-xl text-base transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-building-columns text-slate-400 text-sm"></i>
+              <span>Institutional Partnership</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#10b981] mb-1">20,000+</div>
+              <div class="text-sm text-slate-400 font-medium">Students Trained</div>
+            </div>
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#38bdf8] mb-1">150+</div>
+              <div class="text-sm text-slate-400 font-medium">Colleges Partnered</div>
+            </div>
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#10b981] mb-1">92%</div>
+              <div class="text-sm text-slate-400 font-medium">Placement Ratio</div>
+            </div>
+            <div class="bg-[#0b0f19] p-6 rounded-xl border border-[#1f2937]">
+              <div class="text-3xl sm:text-4xl font-black text-[#f59e0b] mb-1">200+</div>
+              <div class="text-sm text-slate-400 font-medium">Hiring Companies</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ABOUT EDEN EDTECH: CAREER SUCCESS SECTION -->
+      <section class="bg-[#030712] border-b border-[#111827] py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="inline-flex items-center bg-emerald-500/10 border border-emerald-500/20 text-slate-200 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-lg mb-8">About Eden EdTech</div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-6">Transforming College Education<br>into Real-World Career Success</h2>
+              <p class="text-slate-400 text-base leading-relaxed mb-10">At <strong class="text-white">Eden EdTech Placement and Career Hub</strong>, we bridge the divide between theoretical college curricula and modern corporate expectations. We partner with universities and degree colleges to deliver industry-aligned technical skill tracks, soft skills bootcamps, and placement-focused career preparation.</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-[#0f172a] border border-[#253149] rounded-xl p-5"><i class="fa-solid fa-bullseye text-emerald-400 text-xl mb-4"></i><h3 class="text-white font-bold text-lg mb-2">Outcome Focused</h3><p class="text-slate-400 text-xs leading-relaxed">Every curriculum is mapped to active job roles and industry recruitment benchmarks.</p></div>
+                <div class="bg-[#0f172a] border border-[#253149] rounded-xl p-5"><i class="fa-solid fa-award text-blue-400 text-xl mb-4"></i><h3 class="text-white font-bold text-lg mb-2">NAAC / NBA Accreditation</h3><p class="text-slate-400 text-xs leading-relaxed">Helps colleges satisfy key institutional grading criteria for skill enhancement.</p></div>
+              </div>
+            </div>
+            <div class="bg-[#0f172a] border border-[#253149] rounded-2xl p-8 space-y-7">
+              <div class="flex gap-5 items-start"><div class="w-12 h-12 rounded-xl bg-emerald-500/15 flex items-center justify-center shrink-0"><i class="fa-solid fa-code text-emerald-400 text-xl"></i></div><div><h3 class="text-white font-bold text-lg">Comprehensive IT Training</h3><p class="text-slate-400 text-sm">Full-stack, Cloud, AI, and Cybersecurity</p></div></div>
+              <div class="flex gap-5 items-start"><div class="w-12 h-12 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0"><i class="fa-solid fa-suitcase text-blue-400 text-xl"></i></div><div><h3 class="text-white font-bold text-lg">Non-IT Professional Modules</h3><p class="text-slate-400 text-sm">Digital Marketing, Data Analytics &amp; Sales</p></div></div>
+              <div class="flex gap-5 items-start"><div class="w-12 h-12 rounded-xl bg-purple-500/15 flex items-center justify-center shrink-0"><i class="fa-solid fa-users text-purple-400 text-xl"></i></div><div><h3 class="text-white font-bold text-lg">Campus to Corporate Finishing</h3><p class="text-slate-400 text-sm">Aptitude, Mock Interviews &amp; Resume Building</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPANIES WHERE OUR STUDENTS HAVE BEEN PLACED: ABOUT US ONLY -->
+      <section class="bg-[#080d1d] border-b border-[#111827] py-10 company-marquee">
+        <div class="text-center text-[11px] sm:text-xs tracking-[0.18em] uppercase text-slate-400 font-semibold mb-5">
+          Companies Where Our Students Have Been Placed
+        </div>
+        <div class="company-track gap-10 sm:gap-14 px-4" id="company-track">
+          <div class="flex items-center gap-10 sm:gap-14" id="company-set-1"></div>
+          <div class="flex items-center gap-10 sm:gap-14 ml-10 sm:ml-14" id="company-set-2"></div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS: ABOUT US ONLY -->
+      <section class="bg-[#060b18] border-y border-[#111827] py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-12">
+            <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
+              <i class="fa-solid fa-comments"></i> Student Testimonials
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-black text-white mt-4">What Our Students Say</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto mt-3 text-sm sm:text-base">Hear directly from students who completed Eden EdTech training and placement programmes.</p>
+          </div>
+          <div id="public-testimonials" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- APPLY NOW TAB -->
+    <section id="tab-apply" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-14 px-4 text-center border-b border-[#1f2937]">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-3">Apply Now</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">Choose the appropriate application below. </p>
+      </div>
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-[#0b0f19] border border-emerald-500/30 rounded-2xl p-8 text-center shadow-xl">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-5"><i class="fa-solid fa-user-graduate text-2xl text-emerald-400"></i></div>
+            <h3 class="text-2xl font-bold text-white mb-3">Student Registration</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-7">For students who want to register for Eden EdTech training, career development and placement programmes.</p>
+            <button type="button" onclick="alert('Student Google Form will be connected here soon.')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl transition">Student Registration</button>
+          </div>
+          <div class="bg-[#0b0f19] border border-cyan-500/30 rounded-2xl p-8 text-center shadow-xl">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-5"><i class="fa-solid fa-building-columns text-2xl text-cyan-400"></i></div>
+            <h3 class="text-2xl font-bold text-white mb-3">Institutional MOU</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-7">For colleges and institutions interested in MOU partnerships, student training, campus programmes and placement collaboration.</p>
+            <button type="button" onclick="alert('Institutional MOU Google Form will be connected here soon.')" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-3 rounded-xl transition">Apply for MOU</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ALL PROGRAMMES & REGISTRATION TAB -->
+    <section id="tab-programmes" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-14 px-4 text-center border-b border-[#1f2937]">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-3">Student Registration & Specialized Programmes</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Select any track below to register and start your learning pathway.</p>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+        
+        <!-- SECTION 1: IT PROGRAMMES -->
+        <div>
+          <div class="border-b border-[#1f2937] pb-5 mb-8 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-code text-emerald-400"></i> IT & Technical Programmes
+            </h3>
+            <span class="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/20">IT Specializations</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Business Intelligence & Data Analytics</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">PowerBI, SQL queries, Tableau dashboards, and data visualization strategies.</p>
+              </div>
+              <button onclick="openRegistrationModal('Business Intelligence & Data Analytics')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Front-End Web Development</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Build web platforms using HTML5, Tailwind CSS, JavaScript ES6+, and React.js.</p>
+              </div>
+              <button onclick="openRegistrationModal('Front-End Web Development')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Python Programming & Applied Database Management</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Python backend engineering, database architectures, MySQL, and API design.</p>
+              </div>
+              <button onclick="openRegistrationModal('Python Programming & Applied Database Management')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">UI/UX Design & Web Layout Specialization</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Wireframing, Figma prototyping, user research, and modern Web UI design systems.</p>
+              </div>
+              <button onclick="openRegistrationModal('UI/UX Design & Web Layout Specialization')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-emerald-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded mb-4 inline-block">IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Enterprise MIS & Database Reporting</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Enterprise reporting models, ERP database integration, and administrative data flows.</p>
+              </div>
+              <button onclick="openRegistrationModal('Enterprise MIS & Database Reporting')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: NON-IT PROGRAMMES (UPDATED WITH COMMUNICATION & EMAIL ETIQUETTE COURSES) -->
+        <div>
+          <div class="border-b border-[#1f2937] pb-5 mb-8 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-chart-line text-cyan-400"></i> Non-IT & Corporate Tracks
+            </h3>
+            <span class="text-xs font-semibold text-cyan-400 bg-cyan-500/10 px-3.5 py-1.5 rounded-full border border-cyan-500/20">Non-IT Specializations</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Digital Marketing -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Digital Marketing & Performance Media</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">SEO, Performance Ads, Content Strategy, Analytics, and Social Media Marketing.</p>
+              </div>
+              <button onclick="openRegistrationModal('Digital Marketing & Performance Media')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <!-- Corporate HR -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Corporate HR & Talent Acquisition</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Recruitment life-cycle, HR Analytics, Payroll, Compliance, and People Management.</p>
+              </div>
+              <button onclick="openRegistrationModal('Corporate HR & Talent Acquisition')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <!-- NEW COURSE 1: Communication Skills -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Business Communication & Interpersonal Excellence</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Verbal fluency, active listening, executive presentations, cross-cultural workplace communication, and negotiation skills.</p>
+              </div>
+              <button onclick="openRegistrationModal('Business Communication & Interpersonal Excellence')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+
+            <!-- NEW COURSE 2: Email Etiquette -->
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded mb-4 inline-block">NON-IT TRACK</span>
+                <h4 class="text-lg font-bold text-white mb-2">Professional Email Etiquette & Executive Writing</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Formal email structure, professional tone, client communication, meeting summaries, and corporate document formatting.</p>
+              </div>
+              <button onclick="openRegistrationModal('Professional Email Etiquette & Executive Writing')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: CAMPUS TO CORPORATE -->
+        <div>
+          <div class="border-b border-[#1f2937] pb-5 mb-8 flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-graduation-cap text-amber-400"></i> Campus to Corporate Readiness
+            </h3>
+            <span class="text-xs font-semibold text-amber-400 bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-500/20">Placement Acceleration</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-7 flex flex-col justify-between hover:border-amber-500/40 transition">
+              <div>
+                <span class="text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded mb-4 inline-block">SOFT SKILLS & INTERVIEWS</span>
+                <h4 class="text-lg font-bold text-white mb-2">Corporate Readiness & Aptitude Mastery</h4>
+                <p class="text-slate-400 text-sm mb-6 leading-relaxed">Resume building, mock interviews, communication skills, logic & quantitative aptitude training.</p>
+              </div>
+              <button onclick="openRegistrationModal('Corporate Readiness & Aptitude Mastery')" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition">Register for Track</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. INSTITUTIONAL MOU TAB -->
+    <section id="tab-partnership" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-14 px-4 text-center border-b border-[#1f2937]">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-3">College & Institutional Partnership Portal</h2>
+        <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">Empower your students through Eden EdTech Placement and Career Hub MOUs, campus drives, and skill workshops.</p>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+        
+
+        <!-- INSTITUTIONAL PARTNERSHIP OVERVIEW -->
+        <section class="bg-[#030712] border border-[#111827] rounded-2xl p-8 sm:p-10">
+          <div class="inline-flex items-center bg-emerald-500/10 border border-emerald-500/20 text-slate-200 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-lg mb-8">Institutional Partnership</div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-6">Partner with Eden EdTech for<br>Higher Campus Placements</h2>
+              <p class="text-slate-400 text-base leading-relaxed mb-7">We sign formal MOUs with colleges to integrate industry bootcamps directly into academic schedules. Strengthen student employability and support NAAC / NBA placement and skill-development criteria.</p>
+              <div class="space-y-4 text-sm text-slate-300 mb-8">
+                <div class="flex gap-3"><i class="fa-regular fa-circle-check text-emerald-400 mt-0.5"></i><p><strong class="text-slate-200">Guaranteed Placement Support:</strong> On-campus &amp; off-campus hiring drives with companies.</p></div>
+                <div class="flex gap-3"><i class="fa-regular fa-circle-check text-emerald-400 mt-0.5"></i><p><strong class="text-slate-200">NAAC / NBA Documentation:</strong> Student training and completion documentation support.</p></div>
+                <div class="flex gap-3"><i class="fa-regular fa-circle-check text-emerald-400 mt-0.5"></i><p><strong class="text-slate-200">Dedicated Trainer Support:</strong> Corporate-focused trainers and structured campus programmes.</p></div>
+              </div>
+              <button onclick="document.getElementById('mou-request-form').scrollIntoView({behavior:'smooth'})" class="bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-7 py-3.5 rounded-xl transition"><i class="fa-regular fa-file-lines mr-2"></i>Request Institutional MOU Proposal</button>
+            </div>
+            <div class="bg-[#0f172a] border border-[#253149] rounded-2xl p-7 sm:p-8">
+              <h3 class="text-white font-bold text-xl mb-7 flex items-center gap-3"><i class="fa-regular fa-clipboard text-emerald-400"></i> Institutional Compliance Checklist</h3>
+              <div class="space-y-4 text-sm">
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 1: Industry-Aligned Curriculum</span><span class="text-emerald-400 font-semibold">✓ 100% Covered</span></div>
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 2: Skill Enhancement Programs</span><span class="text-emerald-400 font-semibold">✓ Compliant</span></div>
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 3: Placement Statistics &amp; Records</span><span class="text-emerald-400 font-semibold">✓ Verified</span></div>
+                <div class="bg-[#070d1c] border border-[#253149] rounded-xl p-4 flex justify-between gap-4"><span class="text-slate-300">Criterion 5: Student Progression Support</span><span class="text-emerald-400 font-semibold">✓ Audit Ready</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="bg-[#0b0f19] border border-emerald-500/30 p-8 sm:p-10 rounded-2xl relative overflow-hidden">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="space-y-3 max-w-3xl">
+              <span class="text-xs font-bold tracking-wider uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">Understanding Academic MOUs</span>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white">What is a Memorandum of Understanding (MOU)?</h3>
+              <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                A <strong>Memorandum of Understanding (MOU)</strong> is a formal legal agreement between Eden EdTech and an Educational Institution (College/University). It establishes a long-term strategic alliance to enhance student employability, facilitate industry-focused skill development, organize campus recruitment drives, and meet <strong>NAAC / NBA accreditation compliance</strong> requirements.
+              </p>
+            </div>
+            <div class="shrink-0 bg-emerald-500/10 border border-emerald-500/20 p-5 rounded-2xl text-center">
+              <i class="fa-solid fa-file-contract text-4xl text-emerald-400 mb-2"></i>
+              <div class="text-xs text-slate-300 font-semibold">Official Academic Partner</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="mou-request-form" class="max-w-3xl mx-auto">
+          <div class="bg-[#0b0f19] p-8 sm:p-10 rounded-2xl border border-[#1f2937]">
+            <h3 class="text-xl font-bold border-b border-[#1f2937] pb-4 text-white mb-6 flex items-center gap-2">
+              <i class="fa-solid fa-file-lines text-emerald-400"></i>
+              MOU Document & Institutional Partnership Request
+            </h3>
+            <form onsubmit="handlePartnershipSubmit(event)" class="space-y-5 text-sm">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Institution / College Name</label>
+                  <input type="text" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter college name">
+                </div>
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Contact Person / TPO Name</label>
+                  <input type="text" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter contact person name">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Official Email Address</label>
+                  <input type="email" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter official email">
+                </div>
+                <div>
+                  <label class="block font-medium text-slate-300 mb-1.5">Phone / Mobile Number</label>
+                  <input type="tel" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Enter phone number">
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-medium text-slate-300 mb-1.5">Partnership Requirements</label>
+                <textarea rows="4" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500" placeholder="Describe expected student count, target branches, or specific MOU clauses needed..."></textarea>
+              </div>
+
+              <button type="submit" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3.5 rounded-xl text-base transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane text-sm"></i>
+                <span>Submit MOU & Document Request</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. ADMIN SECTION WITH HIGHLY PROFESSIONAL CERTIFICATE GENERATOR -->
+    <section id="tab-admin-section" class="tab-content">
+      <div class="bg-[#0b0f19] text-white py-8 px-4 border-b border-[#1f2937]">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <h2 class="text-2xl font-bold flex items-center gap-3">
+            <i class="fa-solid fa-user-shield text-emerald-400"></i> Eden EdTech Secure Owner Portal
+          </h2>
+          <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3.5 py-1.5 rounded-full font-semibold">Owner Admin Session</span>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 py-10 space-y-12">
+        
+        <!-- STATS -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="bg-[#0b0f19] p-6 rounded-2xl border border-[#1f2937]">
+            <div class="text-slate-400 text-sm mb-1">Total Student Enrolments</div>
+            <div id="admin-stat-total" class="text-3xl sm:text-4xl font-bold text-white">0</div>
+          </div>
+          <div class="bg-[#0b0f19] p-6 rounded-2xl border border-[#1f2937]">
+            <div class="text-slate-400 text-sm mb-1">IT Programmes Enrolled</div>
+            <div id="admin-stat-it" class="text-3xl sm:text-4xl font-bold text-emerald-400">0</div>
+          </div>
+          <div class="bg-[#0b0f19] p-6 rounded-2xl border border-[#1f2937]">
+            <div class="text-slate-400 text-sm mb-1">Non-IT / Corporate Enrolled</div>
+            <div id="admin-stat-nonit" class="text-3xl sm:text-4xl font-bold text-cyan-400">0</div>
+          </div>
+        </div>
+
+        <!-- ENHANCED CERTIFICATE GENERATOR MODULE WITH FONT & DROPDOWN CONTROLS -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-8">
+          <div class="border-b border-[#1f2937] pb-4 mb-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+            <div>
+              <h3 class="font-bold text-white text-xl flex items-center gap-2">
+                <i class="fa-solid fa-award text-amber-400"></i> Professional Certificate Studio
+              </h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">Create premium, print-ready professional certificates with student auto-fill, course selection, certificate ID, fonts, and sizing controls.</p>
+            </div>
+            <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs transition flex items-center gap-2 self-start sm:self-auto shadow-lg shadow-amber-950/40">
+              <i class="fa-solid fa-print text-sm"></i> Print Certificate
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Form Controls -->
+            <div class="space-y-4 bg-[#030712] p-6 rounded-xl border border-[#1f2937]">
+              
+              <div>
+                <label class="block text-xs font-semibold text-amber-400 mb-1">1. Choose Enrolled Student (Auto-Fill)</label>
+                <select id="cert-student-select" onchange="loadStudentToCert()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                  <option value="">-- Choose Enrolled Student --</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Student Full Name</label>
+                <input type="text" id="cert-name" oninput="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500" placeholder="e.g. Ananya Patel">
+              </div>
+
+              <!-- COURSE DROPDOWN -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-300 mb-1">Select Course / Specialization</label>
+                <select id="cert-course-dropdown" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                  <option value="Business Intelligence & Data Analytics">Business Intelligence & Data Analytics</option>
+                  <option value="Front-End Web Development">Front-End Web Development</option>
+                  <option value="Python Programming & Applied Database Management">Python Programming & Applied Database Management</option>
+                  <option value="UI/UX Design & Web Layout Specialization">UI/UX Design & Web Layout Specialization</option>
+                  <option value="Enterprise MIS & Database Reporting">Enterprise MIS & Database Reporting</option>
+                  <option value="Digital Marketing & Performance Media">Digital Marketing & Performance Media</option>
+                  <option value="Corporate HR & Talent Acquisition">Corporate HR & Talent Acquisition</option>
+                  <option value="Business Communication & Interpersonal Excellence">Business Communication & Interpersonal Excellence</option>
+                  <option value="Professional Email Etiquette & Executive Writing">Professional Email Etiquette & Executive Writing</option>
+                  <option value="Corporate Readiness & Aptitude Mastery">Corporate Readiness & Aptitude Mastery</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Issue Date</label>
+                  <input type="date" id="cert-date" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Certificate ID</label>
+                  <input type="text" id="cert-id" value="EDEN-2026-904" oninput="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-2.5 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+              </div>
+
+              <div class="border-t border-[#1f2937] pt-4">
+                <label class="block text-xs font-semibold text-amber-400 mb-1">Certificate Template</label>
+                <select id="cert-template" onchange="switchCertificateTemplate()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                  <option value="black">Template 1 — Premium Black & Gold</option>
+                  <option value="navy">Template 2 — Executive Navy, White & Gold</option>
+                </select>
+              </div>
+
+              <!-- FONT STYLE & SIZE CONTROLS -->
+              <div class="border-t border-[#1f2937] pt-4 space-y-3">
+                <p class="text-xs font-bold text-cyan-400">Typography Settings</p>
+                
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Font Style</label>
+                  <select id="cert-font-style" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <option value="cert-font-cinzel">Cinzel (Formal & Premium)</option>
+                    <option value="cert-font-playfair">Playfair Display (Classic Serif)</option>
+                    <option value="cert-font-inter">Inter (Modern & Clean)</option>
+                    <option value="cert-font-montserrat">Montserrat (Executive Sans)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Student Name Size</label>
+                  <select id="cert-name-size" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <option value="text-2xl sm:text-3xl">Medium (24px)</option>
+                    <option value="text-3xl sm:text-4xl" selected>Large (32px)</option>
+                    <option value="text-4xl sm:text-5xl">Extra Large (40px)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-1">Course Title Size</label>
+                  <select id="cert-course-size" onchange="updateCertPreview()" class="w-full bg-[#0b0f19] border border-[#1f2937] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+                    <option value="text-base sm:text-lg">Standard (18px)</option>
+                    <option value="text-lg sm:text-xl" selected>Large (20px)</option>
+                    <option value="text-xl sm:text-2xl">Extra Large (24px)</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PREMIUM BLACK & GOLD PROFESSIONAL CERTIFICATE -->
+            <div class="lg:col-span-2 flex justify-center items-center">
+              <div id="certificate-black" class="certificate-template print-selected w-full bg-[#080808] text-white p-3 sm:p-5 rounded-xl shadow-2xl relative overflow-hidden cert-font-cinzel border border-[#d4af37]">
+                <div class="relative border-[3px] border-[#d4af37] p-1">
+                  <div class="relative border border-[#8f7628] px-7 sm:px-12 py-8 sm:py-10 overflow-hidden min-h-[520px] flex flex-col justify-between">
+                    <!-- understated premium watermark -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-[0.035] pointer-events-none">
+                      <i class="fa-solid fa-graduation-cap text-[240px] text-[#f5d76e]"></i>
+                    </div>
+                    <div class="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-[#d4af37] m-3"></div>
+                    <div class="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-[#d4af37] m-3"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-[#d4af37] m-3"></div>
+                    <div class="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-[#d4af37] m-3"></div>
+
+                    <div class="relative z-10 text-center">
+                      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-[#d4af37] mb-3">
+                        <i class="fa-solid fa-graduation-cap text-2xl text-[#d4af37]"></i>
+                      </div>
+                      <h2 class="text-2xl sm:text-3xl font-black tracking-[0.18em] text-[#f6e7a7]">EDEN EDTECH</h2>
+                      <p class="text-[9px] sm:text-[10px] tracking-[0.35em] uppercase text-[#c8aa4c] mt-1">Placement &amp; Career Hub</p>
+                      <div class="flex items-center justify-center gap-3 mt-4">
+                        <span class="h-px w-16 bg-[#806a24]"></span><span class="w-1.5 h-1.5 rotate-45 bg-[#d4af37]"></span><span class="h-px w-16 bg-[#806a24]"></span>
+                      </div>
+                    </div>
+
+                    <div class="relative z-10 text-center py-5">
+                      <p class="text-[10px] sm:text-xs tracking-[0.28em] uppercase text-[#d4af37] mb-2">Certificate of</p>
+                      <h3 class="text-2xl sm:text-4xl font-bold tracking-[0.08em] text-white uppercase">Professional Completion</h3>
+                      <p class="text-[10px] sm:text-xs font-sans text-neutral-400 mt-4">This distinguished certificate is proudly presented to</p>
+                      <h4 id="preview-cert-name" class="text-3xl sm:text-4xl font-black text-[#f4d66f] mt-4 mb-3 tracking-wide">ANANYA PATEL</h4>
+                      <div class="w-2/3 max-w-md h-px bg-gradient-to-r from-transparent via-[#d4af37] to-transparent mx-auto"></div>
+                      <p class="text-[10px] sm:text-xs font-sans text-neutral-400 mt-5">for successfully completing the professional certification programme in</p>
+                      <h5 id="preview-cert-course" class="text-lg sm:text-xl font-bold text-white mt-2 tracking-wide uppercase">BUSINESS INTELLIGENCE &amp; DATA ANALYTICS</h5>
+                      <p class="text-[10px] sm:text-[11px] font-sans text-neutral-400 max-w-xl mx-auto leading-relaxed mt-4">
+                        Awarded in recognition of successful completion of the prescribed training, practical learning and assessment requirements established by Eden EdTech.
+                      </p>
+                    </div>
+
+                    <div class="relative z-10">
+                      <div class="grid grid-cols-3 items-end gap-3 pt-5 border-t border-[#4d421e]">
+                        <div class="text-left">
+                          <p id="preview-cert-date" class="text-[10px] font-sans font-semibold text-[#f6e7a7]">Date: 29/09/2026</p>
+                          <p id="preview-cert-id" class="text-[9px] font-sans text-neutral-500 mt-1">ID: EDEN-2026-904</p>
+                          <p class="text-[8px] font-sans uppercase tracking-wider text-neutral-600 mt-1">Credential Reference</p>
+                        </div>
+                        <div class="flex justify-center">
+                          <div class="w-16 h-16 rounded-full border-2 border-[#d4af37] outline outline-1 outline-offset-2 outline-[#6f5c20] flex flex-col items-center justify-center text-[#d4af37] bg-[#11100b] shadow-lg">
+                            <i class="fa-solid fa-award text-xl"></i>
+                            <span class="text-[6px] tracking-wider mt-1">OFFICIAL</span>
+                          </div>
+                        </div>
+                        <div class="text-right">
+                          <div class="text-[#f6e7a7] italic font-semibold text-sm border-b border-[#806a24] pb-1 inline-block">Eden EdTech Board</div>
+                          <p class="text-[8px] sm:text-[9px] font-sans uppercase tracking-wider text-neutral-500 mt-2">Authorized Signatory</p>
+                        </div>
+                      </div>
+                      <p class="text-center text-[7px] sm:text-[8px] font-sans tracking-[0.16em] uppercase text-neutral-600 mt-5">Eden EdTech Placement &amp; Career Hub • Professional Credential</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- EXECUTIVE NAVY / WHITE / GOLD TEMPLATE -->
+              <div id="certificate-navy" class="certificate-template hidden w-full bg-[#fbfaf6] text-[#102a4c] p-4 sm:p-6 rounded-xl shadow-2xl relative overflow-hidden cert-font-cinzel border border-[#c9a84c]">
+                <div class="relative min-h-[520px] border-[3px] border-[#102a4c] bg-[#fbfaf6] px-8 sm:px-12 py-9 flex flex-col justify-between overflow-hidden">
+                  <div class="absolute -top-24 -left-20 w-80 h-52 bg-[#102a4c] rotate-[-12deg] rounded-[50%]"></div>
+                  <div class="absolute -top-20 left-20 w-72 h-28 bg-[#c9a84c] rotate-[-10deg] rounded-[50%] opacity-95"></div>
+                  <div class="absolute -bottom-28 -right-20 w-96 h-56 bg-[#102a4c] rotate-[-10deg] rounded-[50%]"></div>
+                  <div class="absolute -bottom-16 right-28 w-64 h-20 bg-[#c9a84c] rotate-[-12deg] rounded-[50%]"></div>
+                  <div class="relative z-10 text-center pt-6">
+                    <div class="inline-flex w-14 h-14 items-center justify-center rounded-full border-2 border-[#c9a84c] bg-white shadow"><i class="fa-solid fa-graduation-cap text-2xl text-[#102a4c]"></i></div>
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-[0.16em] mt-3">EDEN EDTECH</h2>
+                    <p class="text-[9px] tracking-[0.32em] uppercase text-[#9a7a25]">Placement &amp; Career Hub</p>
+                  </div>
+                  <div class="relative z-10 text-center py-3">
+                    <h3 class="text-3xl sm:text-4xl font-black tracking-[0.08em]">CERTIFICATE</h3>
+                    <p class="text-sm tracking-[0.35em] uppercase text-[#9a7a25] mt-1">of Professional Completion</p>
+                    <div class="w-40 h-px bg-[#c9a84c] mx-auto my-4"></div>
+                    <p class="text-[11px] font-sans text-slate-500">This certificate is proudly presented to</p>
+                    <h4 id="navy-cert-name" class="text-3xl sm:text-4xl font-black text-[#102a4c] mt-4 mb-3">ANANYA PATEL</h4>
+                    <p class="text-[11px] font-sans text-slate-500 mt-3">for successfully completing the professional certification programme in</p>
+                    <h5 id="navy-cert-course" class="text-lg sm:text-xl font-bold text-[#9a7a25] mt-2 uppercase">BUSINESS INTELLIGENCE &amp; DATA ANALYTICS</h5>
+                    <p class="text-[10px] font-sans text-slate-500 max-w-xl mx-auto mt-4 leading-relaxed">Awarded in recognition of successful completion of the prescribed training, practical learning and assessment requirements established by Eden EdTech.</p>
+                  </div>
+                  <div class="relative z-10 grid grid-cols-3 items-end gap-3 pt-5">
+                    <div class="text-left"><p id="navy-cert-date" class="text-[10px] font-sans font-semibold">Date: 29/09/2026</p><p id="navy-cert-id" class="text-[9px] font-sans text-slate-500 mt-1">ID: EDEN-2026-904</p></div>
+                    <div class="flex justify-center"><div class="w-16 h-16 rounded-full border-2 border-[#c9a84c] flex flex-col items-center justify-center bg-white text-[#9a7a25]"><i class="fa-solid fa-award text-xl"></i><span class="text-[6px] mt-1">OFFICIAL</span></div></div>
+                    <div class="text-right"><div class="italic font-semibold text-sm border-b border-[#c9a84c] pb-1 inline-block">Eden EdTech Board</div><p class="text-[8px] font-sans uppercase tracking-wider text-slate-500 mt-2">Authorized Signatory</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TESTIMONIAL MANAGEMENT -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-8">
+          <div class="border-b border-[#1f2937] pb-4 mb-6">
+            <h3 class="font-bold text-white text-xl flex items-center gap-2"><i class="fa-solid fa-star text-yellow-400"></i> Testimonials Manager</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">Add a student photo, name, role or college, and testimonial text. Saved testimonials appear only on the About Us page.</p>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+            <input id="testimonial-name" placeholder="Name" class="lg:col-span-1 bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+            <input id="testimonial-role" placeholder="Role / College" class="lg:col-span-1 bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+            <input id="testimonial-photo" type="file" accept="image/*" class="lg:col-span-1 bg-[#030712] border border-[#1f2937] rounded-xl px-3 py-2.5 text-xs text-slate-300">
+            <textarea id="testimonial-text" placeholder="Testimonial message" rows="2" class="lg:col-span-2 bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-3 text-sm text-white focus:outline-none focus:border-emerald-500"></textarea>
+          </div>
+          <button onclick="addTestimonial()" class="mt-4 bg-[#10b981] hover:bg-[#059669] text-white font-semibold px-5 py-2.5 rounded-xl text-sm"><i class="fa-solid fa-plus mr-1"></i> Add Testimonial</button>
+          <div id="admin-testimonials-list" class="mt-6 space-y-3"></div>
+        </div>
+
+        <!-- SOURCE CODE -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-cyan-500/20 p-8">
+          <div class="flex flex-col sm:flex-row justify-between gap-4 sm:items-center mb-5">
+            <div>
+              <h3 class="font-bold text-white text-xl flex items-center gap-2"><i class="fa-solid fa-code text-cyan-400"></i> Website Source Code</h3>
+              <p class="text-slate-400 text-xs sm:text-sm mt-1">View the current HTML source or download a complete copy of the website.</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="refreshSourceCode()" class="border border-[#1f2937] bg-[#030712] text-slate-200 px-4 py-2.5 rounded-xl text-xs font-semibold hover:border-cyan-500/50">Refresh Code</button>
+              <button onclick="downloadSourceCode()" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-download mr-1"></i> Download HTML</button>
+            </div>
+          </div>
+          <textarea id="source-code-viewer" spellcheck="false" readonly class="w-full h-80 bg-[#020617] border border-[#1f2937] rounded-xl p-4 text-[11px] leading-relaxed text-cyan-100 font-mono focus:outline-none"></textarea>
+        </div>
+
+        <!-- REGISTERED STUDENTS TABLE -->
+        <div class="bg-[#0b0f19] rounded-2xl border border-[#1f2937] p-8">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-white text-base sm:text-lg">Registered Students Database</h3>
+            <button onclick="clearAdminData()" class="text-xs text-red-400 hover:text-red-300 border border-red-500/30 bg-red-950/20 px-4 py-1.5 rounded-lg">Clear All Registrations</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm text-slate-300">
+              <thead>
+                <tr class="border-b border-[#1f2937] text-slate-400">
+                  <th class="py-3">Date</th>
+                  <th class="py-3">Name</th>
+                  <th class="py-3">Email</th>
+                  <th class="py-3">Phone</th>
+                  <th class="py-3">Selected Programme</th>
+                </tr>
+              </thead>
+              <tbody id="admin-student-table-body">
+                <tr><td colspan="5" class="py-6 text-center text-slate-500">No student registrations found.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-[#030712] text-slate-500 text-xs sm:text-sm py-10 border-t border-[#111827]">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p>&copy; 2026 Eden EdTech Placement and Career Hub. All rights reserved.</p>
+      
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-[#0b0f19] px-4 py-2 rounded-lg border border-[#1f2937] text-xs text-slate-300 font-medium">
+          <i class="fa-solid fa-sparkles text-cyan-400"></i>
+          <span>Eden EdTech Placement & Career Hub</span>
+        </div>
+        <!-- Hidden Owner Access Icon -->
+        <button onclick="promptOwnerLogin()" title="Owner Admin Access" class="text-slate-700 hover:text-slate-500 transition px-2 py-1">
+          <i class="fa-solid fa-lock text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= REGISTRATION MODAL ================= -->
+  <div id="modal-registration" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b0f19] border border-[#1f2937] rounded-2xl shadow-2xl max-w-md w-full p-7 relative text-white">
+      <button onclick="closeRegistrationModal()" class="absolute top-5 right-5 text-slate-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+      <h3 class="text-lg font-bold text-white mb-1">Student Course Registration</h3>
+      <p id="modal-selected-course" class="text-xs text-emerald-400 font-semibold mb-5">Course Name</p>
+
+      <form onsubmit="handleRegistrationSubmit(event)" class="space-y-4 text-xs sm:text-sm">
+        <div>
+          <label class="block font-medium mb-1 text-slate-300">Full Name</label>
+          <input type="text" id="reg-name" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block font-medium mb-1 text-slate-300">Email Address</label>
+          <input type="email" id="reg-email" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block font-medium mb-1 text-slate-300">Phone Number</label>
+          <input type="tel" id="reg-phone" required class="w-full bg-[#030712] border border-[#1f2937] rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500">
+        </div>
+        <button type="submit" class="w-full bg-[#10b981] hover:bg-[#059669] text-white font-semibold py-3 rounded-xl text-sm transition mt-2">
+          Complete Registration
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let currentCourse = '';
+    let registrations = JSON.parse(localStorage.getItem('eden_registrations')) || [];
+
+    // Set today's date in certificate date input by default
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      const dateElem = document.getElementById('cert-date');
+      if (dateElem) dateElem.value = today;
+      renderCompanies();
+      renderTestimonials();
+      refreshSourceCode();
+    });
+
+    const defaultCompanies = ['Infosys', 'Wipro', 'Accenture', 'Cognizant', 'Tech Mahindra', 'Capgemini', 'IBM', 'HCLTech', 'TCS', 'Deloitte', 'Genpact', 'Concentrix'];
+
+    const defaultTestimonials = [
+      {name:'Ananya Patel', role:'Business Analytics Graduate', photo:'https://i.pravatar.cc/160?img=47', text:'The programme gave me practical exposure to dashboards, SQL and interview preparation. The structured training made me much more confident.'},
+      {name:'Rahul Sharma', role:'Campus Placement Student', photo:'https://i.pravatar.cc/160?img=12', text:'The mock interviews and corporate readiness sessions helped me understand what recruiters expect and how to present my skills professionally.'},
+      {name:'Priya Nair', role:'BCA Graduate', photo:'https://i.pravatar.cc/160?img=32', text:'I liked the balance between technical learning and communication training. The mentors were supportive throughout the placement preparation journey.'}
+    ];
+    let testimonials = JSON.parse(localStorage.getItem('eden_testimonials')) || defaultTestimonials;
+
+    function escapeHTML(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+    }
+
+    function renderCompanies() {
+      const make = () => defaultCompanies.map(name => `
+        <div class="flex items-center gap-2 whitespace-nowrap text-slate-300 font-semibold text-sm sm:text-base">
+          <span class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center"><i class="fa-solid fa-building text-emerald-400 text-xs"></i></span>
+          <span>${escapeHTML(name)}</span>
+        </div>`).join('');
+      document.getElementById('company-set-1').innerHTML = make();
+      document.getElementById('company-set-2').innerHTML = make();
+    }
+
+    function renderTestimonials() {
+      const publicBox = document.getElementById('public-testimonials');
+      if (publicBox) {
+        publicBox.innerHTML = testimonials.map(t => `
+          <article class="testimonial-card bg-[#0b0f19] border border-[#1f2937] rounded-2xl p-7 text-center">
+            <img src="${escapeHTML(t.photo)}" alt="${escapeHTML(t.name)}" class="w-20 h-20 rounded-full object-cover mx-auto border-4 border-emerald-500/20 shadow-lg">
+            <div class="flex justify-center gap-1 text-amber-400 mt-4 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="text-slate-300 text-sm leading-relaxed mt-4 min-h-[90px]">“${escapeHTML(t.text)}”</p>
+            <h4 class="text-white font-bold mt-5">${escapeHTML(t.name)}</h4>
+            <p class="text-emerald-400 text-xs font-semibold mt-1">${escapeHTML(t.role)}</p>
+          </article>`).join('');
+      }
+      const adminBox = document.getElementById('admin-testimonials-list');
+      if (adminBox) {
+        adminBox.innerHTML = testimonials.map((t,i) => `
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 bg-[#030712] border border-[#1f2937] rounded-xl p-3">
+            <img src="${escapeHTML(t.photo)}" class="w-12 h-12 rounded-full object-cover" alt="">
+            <div class="flex-1"><div class="text-white text-sm font-bold">${escapeHTML(t.name)}</div><div class="text-emerald-400 text-xs">${escapeHTML(t.role)}</div><div class="text-slate-400 text-xs mt-1">${escapeHTML(t.text)}</div></div>
+            <div class="flex gap-2"><button onclick="editTestimonial(${i})" class="text-cyan-300 border border-cyan-500/20 px-3 py-2 rounded-lg text-xs">Edit</button><button onclick="deleteTestimonial(${i})" class="text-red-400 border border-red-500/20 px-3 py-2 rounded-lg text-xs">Delete</button></div>
+          </div>`).join('');
+      }
+    }
+
+    function addTestimonial() {
+      const name = document.getElementById('testimonial-name').value.trim();
+      const role = document.getElementById('testimonial-role').value.trim();
+      const text = document.getElementById('testimonial-text').value.trim();
+      const file = document.getElementById('testimonial-photo').files[0];
+      if (!name || !role || !text) { alert('Please enter the name, role/college and testimonial.'); return; }
+      const save = photo => {
+        testimonials.push({name, role, text, photo: photo || 'https://i.pravatar.cc/160?u=' + encodeURIComponent(name)});
+        localStorage.setItem('eden_testimonials', JSON.stringify(testimonials));
+        renderTestimonials();
+        document.getElementById('testimonial-name').value='';
+        document.getElementById('testimonial-role').value='';
+        document.getElementById('testimonial-text').value='';
+        document.getElementById('testimonial-photo').value='';
+      };
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => save(e.target.result);
+        reader.readAsDataURL(file);
+      } else save('');
+    }
+
+    function editTestimonial(index) {
+      const t = testimonials[index];
+      const name = prompt('Student name:', t.name); if (name === null) return;
+      const role = prompt('Role / College:', t.role); if (role === null) return;
+      const message = prompt('Testimonial:', t.text); if (message === null) return;
+      const changePhoto = confirm('Do you want to change the photo too?');
+      const saveEdit = (photo) => {
+        testimonials[index] = {name: name.trim() || t.name, role: role.trim() || t.role, text: message.trim() || t.text, photo: photo || t.photo};
+        localStorage.setItem('eden_testimonials', JSON.stringify(testimonials)); renderTestimonials();
+      };
+      if (changePhoto) {
+        const input=document.createElement('input'); input.type='file'; input.accept='image/*';
+        input.onchange=()=>{ const f=input.files[0]; if(!f) return; const r=new FileReader(); r.onload=e=>saveEdit(e.target.result); r.readAsDataURL(f); }; input.click();
+      } else saveEdit(t.photo);
+    }
+
+    function deleteTestimonial(index) {
+      if (confirm('Delete this testimonial?')) {
+        testimonials.splice(index,1);
+        localStorage.setItem('eden_testimonials', JSON.stringify(testimonials));
+        renderTestimonials();
+      }
+    }
+
+    function refreshSourceCode() {
+      const viewer = document.getElementById('source-code-viewer');
+      if (viewer) viewer.value = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    }
+
+    function downloadSourceCode() {
+      refreshSourceCode();
+      const code = document.getElementById('source-code-viewer').value;
+      const blob = new Blob([code], {type:'text/html;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'eden-edtech-website.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      
+      let targetId = tabId;
+      if (tabId === 'admin-section' || tabId === 'admin') {
+        targetId = 'admin-section';
+        renderAdminTable();
+        populateCertDropdown();
+        renderTestimonials();
+        refreshSourceCode();
+      }
+
+      const selectedTab = document.getElementById(`tab-${targetId}`);
+      if (selectedTab) selectedTab.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function promptOwnerLogin() {
+      const pwd = prompt("Enter Owner Admin Password:");
+      if (pwd === "admin" || pwd === "owner" || pwd === "1234") {
+        switchTab('admin-section');
+      } else if (pwd !== null) {
+        alert("Incorrect Admin Password.");
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function openRegistrationModal(courseName) {
+      currentCourse = courseName;
+      document.getElementById('modal-selected-course').innerText = courseName;
+      document.getElementById('modal-registration').classList.remove('hidden');
+    }
+
+    function closeRegistrationModal() {
+      document.getElementById('modal-registration').classList.add('hidden');
+    }
+
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const newReg = {
+        date: new Date().toLocaleDateString(),
+        name: document.getElementById('reg-name').value,
+        email: document.getElementById('reg-email').value,
+        phone: document.getElementById('reg-phone').value,
+        course: currentCourse
+      };
+
+      registrations.push(newReg);
+      localStorage.setItem('eden_registrations', JSON.stringify(registrations));
+      alert(`Registration successful for ${newReg.name}!`);
+      closeRegistrationModal();
+      e.target.reset();
+    }
+
+    function handlePartnershipSubmit(e) {
+      e.preventDefault();
+      alert('Institutional MOU & Document request submitted successfully!');
+      e.target.reset();
+    }
+
+    function clearAdminData() {
+      if (confirm('Are you sure you want to clear all registrations?')) {
+        registrations = [];
+        localStorage.removeItem('eden_registrations');
+        renderAdminTable();
+        populateCertDropdown();
+      }
+    }
+
+    function populateCertDropdown() {
+      const dropdown = document.getElementById('cert-student-select');
+      if (!dropdown) return;
+      dropdown.innerHTML = '<option value="">-- Choose Enrolled Student --</option>';
+      registrations.forEach((reg, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.innerText = `${reg.name} (${reg.course})`;
+        dropdown.appendChild(opt);
+      });
+    }
+
+    function loadStudentToCert() {
+      const dropdown = document.getElementById('cert-student-select');
+      const idx = dropdown.value;
+      if (idx !== "" && registrations[idx]) {
+        const student = registrations[idx];
+        document.getElementById('cert-name').value = student.name;
+        
+        const courseDropdown = document.getElementById('cert-course-dropdown');
+        if (courseDropdown) courseDropdown.value = student.course;
+        
+        updateCertPreview();
+      }
+    }
+
+    function switchCertificateTemplate() {
+      const choice = document.getElementById('cert-template').value;
+      document.querySelectorAll('.certificate-template').forEach(el => { el.classList.add('hidden'); el.classList.remove('print-selected'); });
+      const selected = document.getElementById(choice === 'navy' ? 'certificate-navy' : 'certificate-black');
+      selected.classList.remove('hidden'); selected.classList.add('print-selected');
+      updateCertPreview();
+    }
+
+    function updateCertPreview() {
+      const name = document.getElementById('cert-name').value || 'ANANYA PATEL';
+      const course = document.getElementById('cert-course-dropdown').value || 'BUSINESS INTELLIGENCE & DATA ANALYTICS';
+      const dateVal = document.getElementById('cert-date').value;
+      const certId = document.getElementById('cert-id').value || 'EDEN-2026-904';
+      const dateText = 'Date: ' + (dateVal ? new Date(dateVal+'T00:00:00').toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB'));
+      [['preview-cert-name',name],['preview-cert-course',course],['navy-cert-name',name],['navy-cert-course',course]].forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.innerText=v.toUpperCase();});
+      [['preview-cert-date',dateText],['navy-cert-date',dateText],['preview-cert-id','ID: '+certId],['navy-cert-id','ID: '+certId]].forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.innerText=v;});
+      const fontStyle=document.getElementById('cert-font-style').value;
+      document.querySelectorAll('.certificate-template').forEach(e=>{e.classList.remove('cert-font-cinzel','cert-font-playfair','cert-font-inter','cert-font-montserrat');e.classList.add(fontStyle);});
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-student-table-body');
+      const totalStat = document.getElementById('admin-stat-total');
+      const itStat = document.getElementById('admin-stat-it');
+      const nonItStat = document.getElementById('admin-stat-nonit');
+
+      if (!tbody) return;
+
+      if (registrations.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="py-6 text-center text-slate-500">No student registrations found.</td></tr>';
+        if (totalStat) totalStat.innerText = '0';
+        if (itStat) itStat.innerText = '0';
+        if (nonItStat) nonItStat.innerText = '0';
+        return;
+      }
+
+      let itCount = 0;
+      let nonItCount = 0;
+
+      tbody.innerHTML = registrations.map(reg => {
+        const lowerC = reg.course.toLowerCase();
+        if (lowerC.includes('digital') || lowerC.includes('hr') || lowerC.includes('communication') || lowerC.includes('email') || lowerC.includes('corporate readiness')) {
+          nonItCount++;
+        } else {
+          itCount++;
+        }
+        return `
+          <tr class="border-b border-[#1f2937]">
+            <td class="py-3">${reg.date}</td>
+            <td class="py-3 font-medium text-white">${reg.name}</td>
+            <td class="py-3">${reg.email}</td>
+            <td class="py-3">${reg.phone || 'N/A'}</td>
+            <td class="py-3 text-emerald-400 font-medium">${reg.course}</td>
+          </tr>
+        `;
+      }).join('');
+
+      if (totalStat) totalStat.innerText = registrations.length;
+      if (itStat) itStat.innerText = itCount;
+      if (nonItStat) nonItStat.innerText = nonItCount;
+    }
+  </script>
+</body>
+</html>
